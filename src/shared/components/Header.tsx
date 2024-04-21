@@ -17,37 +17,17 @@ import { UserOutlined } from '@ant-design/icons';
 import {auth, child, db, get, ref} from "../../firebase-config";
 import { useSelector } from "react-redux";
 import { dispatch } from "../../store";
-import { setAuth } from "../../store/reducers/auth";
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-
-const dbref = ref(db);
+import { authSignOut } from "../../store/reducers/auth";
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
+    const navigate = useNavigate();
+    const user = useSelector((state: any) => state.auth.user);
+
     const [isModalVisible, setIsModalVisible] = useState({
         form: '',
         isOpen: false
     });
-
-    const user = useSelector((state: any) => state.auth.user);
-
-    useEffect(() => {
-        onAuthStateChanged(auth, async (currentUser: any) => {
-            if (currentUser) {
-                const snapshot = await get(child(dbref, `UsersAuthList/${currentUser.uid}`));
-
-                if (snapshot.exists()) {
-                    dispatch(
-                        setAuth({
-                            user: {
-                                firstName: snapshot.val().firstName,
-                                lastName: snapshot.val().lastName
-                            }
-                        })
-                    )
-                }
-            }
-        })
-    }, []);
 
     const toggleModal = (form: string = '') => {
         setIsModalVisible({
@@ -57,8 +37,7 @@ const Header = () => {
     };
 
     const handleSignOut = async () => {
-        await signOut(auth);
-        dispatch(setAuth({}));
+        dispatch(authSignOut(() => {}));
     };
 
     return (
@@ -71,15 +50,17 @@ const Header = () => {
                     <HeaderNav>
                         <HeaderNavList>
                             {user?.firstName ? (
-                                <HeaderProfile>
-                                    <Avatar icon={<UserOutlined />} />
-                                    <p>
-                                        {user.firstName}
-                                        {" "}
-                                        {user.lastName}
-                                    </p>
+                                <>
+                                    <HeaderProfile onClick={() => navigate('/profile')}>
+                                        <Avatar icon={<UserOutlined />} />
+                                        <p>
+                                            {user.firstName}
+                                            {" "}
+                                            {user.lastName}
+                                        </p>
+                                    </HeaderProfile>
                                     <HeaderNavListItem onClick={handleSignOut}>Sign Out</HeaderNavListItem>
-                                </HeaderProfile>
+                                </>
                             ) : (
                                 <>
                                     <HeaderNavListItem onClick={() => toggleModal('signIn')}>Sign In</HeaderNavListItem>

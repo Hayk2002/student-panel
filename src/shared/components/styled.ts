@@ -2,6 +2,19 @@ import styled from "styled-components";
 import {Container} from "../styled";
 import {Link} from "react-router-dom";
 
+// PROFILE BLOCK STYLES
+
+export const ProfileBlock = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 5px 8px;
+
+    p {
+        margin: 0;
+        padding: 0 10px;
+    }
+`;
+
 // HEADER STYLES
 
 export const HeaderWrapper = styled.header`
@@ -23,14 +36,14 @@ export const HeaderLogo = styled(Link)`
     }
 `;
 
-export const HeaderProfile = styled.div`
-    display: flex;
-    align-items: center;
+export const HeaderProfile = styled(ProfileBlock)`
+    cursor: pointer;
     
-    p {
-        margin: 0;
-        padding: 0 10px;
-        border-right: 1px solid #878686;
+    &:hover {
+        border-radius: 8px;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        transition: 0.3s ease-in-out;
     }
 `;
 
@@ -141,4 +154,3 @@ export const ModalTitle = styled.h5`
     font-size: 24px;
     text-align: center;
 `;
-

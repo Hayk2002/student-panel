@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, child, db, get, ref, set } from "../../firebase-config";
+import {dispatch} from "../index";
 
 const dbref = ref(db);
 
 const initialState = {
     loading: false,
-    user: {},
+    user: null
 };
 
 const authSlice = createSlice({
@@ -17,7 +18,7 @@ const authSlice = createSlice({
             state.loading = payload;
         },
         setAuth(state, { payload }) {
-            state.user = payload.user;
+            state.user = payload?.user;
         },
     }
 });
@@ -64,6 +65,8 @@ export const authSignIn = ({ email, password }: any, successCallback: () => void
                 )
             }
 
+            localStorage.setItem('isUserAuthenticated', 'true');
+
             successCallback();
         } catch (error: any) {
             console.log(error);
@@ -73,3 +76,12 @@ export const authSignIn = ({ email, password }: any, successCallback: () => void
         }
     }
 };
+
+export const authSignOut = (callback: () => void) => {
+    return async (dispatch: any) => {
+        await signOut(auth);
+        dispatch(setAuth(null));
+        localStorage.removeItem('isUserAuthenticated');
+        callback()
+    }
+}
