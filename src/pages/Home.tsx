@@ -5,7 +5,7 @@ import {
     AlumniSection,
     SliderImage
 } from "./styled";
-import { ContainerSmall } from "../shared/styled";
+import { Container } from "../shared/styled";
 import { Typography } from "antd";
 import Slider from "react-slick";
 
@@ -33,16 +33,16 @@ const Home = () => {
     return (
         <HomePageWrapper>
             <HeroSection>
-                <ContainerSmall>
+                <Container>
                     <HeroSectionContent>
                         <Typography.Title style={{color: '#ffffff'}}>
                             Welcome to student Panel
                         </Typography.Title>
                     </HeroSectionContent>
-                </ContainerSmall>
+                </Container>
             </HeroSection>
             <AlumniSection>
-                <ContainerSmall>
+                <Container>
                     <Slider {...sliderSettings}>
                         <SliderImage>
                             <img src={StudentFront} alt="image"/>
@@ -70,7 +70,7 @@ const Home = () => {
                             <img src={StudentWithBackpack} alt="image"/>
                         </SliderImage>
                     </Slider>
-                </ContainerSmall>
+                </Container>
             </AlumniSection>
         </HomePageWrapper>
     );
