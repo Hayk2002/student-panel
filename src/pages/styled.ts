@@ -43,7 +43,7 @@ export const HeroSectionContent = styled.div`
 
 export const HeroSectionTitle = styled.h1`
     color: #ffffff;
-    font-size: 24px;
+    font-size: 48px;
     font-weight: bold;
     letter-spacing: 2px;
     text-align: center;
