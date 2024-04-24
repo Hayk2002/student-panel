@@ -9,4 +9,5 @@ export const Container = styled.div`
 
 export const MainContent = styled.main`
     width: 100%;
+    flex-grow: 1;
 `;

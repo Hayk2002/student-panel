@@ -62,6 +62,7 @@ export const HeaderNavList = styled.ul`
 export const HeaderNavListItem = styled.li`
     font-size: 18px;
     font-weight: 600;
+    font-style: oblique;
     padding: 0 10px;
     color: #2557a7;
     cursor: pointer;

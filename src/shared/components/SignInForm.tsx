@@ -20,21 +20,21 @@ const SignInForm = ({ closeModal }: { closeModal: () => void }) => {
             onFinish={handleSignIn}
         >
             <Form.Item
-                label="Email"
+                label="Էլ․ հասցե"
                 name="email"
             >
                 <Input />
             </Form.Item>
 
             <Form.Item
-                label="Password"
+                label="Գաղտնաբառ"
                 name="password"
             >
                 <Input.Password />
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 10 }}>
-                <Button type="primary" htmlType="submit" loading={isLoading}>
-                    Login
+            <Form.Item>
+                <Button type="primary" htmlType="submit" loading={isLoading} style={{ display: "flex", margin: "10px auto 0" }}>
+                    Հաստատել
                 </Button>
             </Form.Item>
         </Form>

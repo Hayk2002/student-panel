@@ -24,35 +24,35 @@ const SignUpForm = ({ closeModal }: { closeModal: () => void }) => {
             onFinish={handleSignUp}
         >
             <Form.Item
-                label="First name"
+                label="Անուն"
                 name="firstName"
             >
                 <Input />
             </Form.Item>
 
             <Form.Item
-                label="Last name"
+                label="Ազգանուն"
                 name="lastName"
             >
                 <Input />
             </Form.Item>
 
             <Form.Item
-                label="Email"
+                label="Էլ․ հասցե"
                 name="email"
             >
                 <Input />
             </Form.Item>
 
             <Form.Item
-                label="Password"
+                label="Գաղտնաբառ"
                 name="password"
             >
                 <Input.Password />
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 10 }}>
-                <Button type="primary" htmlType="submit" loading={isLoading}>
-                    Register
+            <Form.Item>
+                <Button type="primary" htmlType="submit" loading={isLoading} style={{ display: "flex", margin: "10px auto 0" }}>
+                    Հաստատել
                 </Button>
             </Form.Item>
         </Form>

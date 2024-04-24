@@ -1,3 +1,9 @@
+import { Avatar } from "antd";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { UserOutlined } from '@ant-design/icons';
+
 import {
     HeaderLogo,
     HeaderNav,
@@ -7,18 +13,12 @@ import {
     HeaderContainer,
     HeaderProfile
 } from "./styled";
-import LogoImg from 'assets/high_school_logo.svg';
-import {useEffect, useState} from "react";
-import CustomModal from "shared/components/CustomModal";
-import SignInForm from "./signInForm";
-import SignUpForm from "./signUpForm";
-import { Avatar } from "antd";
-import { UserOutlined } from '@ant-design/icons';
-import {auth, child, db, get, ref} from "../../firebase-config";
-import { useSelector } from "react-redux";
+import SignInForm from "./SignInForm";
+import SignUpForm from "./SignUpForm";
 import { dispatch } from "../../store";
+import LogoImg from 'assets/high_school_logo.svg';
+import CustomModal from "shared/components/CustomModal";
 import { authSignOut } from "../../store/reducers/auth";
-import {useNavigate} from "react-router-dom";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -63,15 +63,15 @@ const Header = () => {
                                 </>
                             ) : (
                                 <>
-                                    <HeaderNavListItem onClick={() => toggleModal('signIn')}>Sign In</HeaderNavListItem>
-                                    <HeaderNavListItem onClick={() => toggleModal('signUp')}>Sign Up</HeaderNavListItem>
+                                    <HeaderNavListItem onClick={() => toggleModal('signIn')}>Մուտք</HeaderNavListItem>
+                                    <HeaderNavListItem onClick={() => toggleModal('signUp')}>Գրանցում</HeaderNavListItem>
                                 </>
                             )}
                         </HeaderNavList>
                     </HeaderNav>
                 </HeaderContainer>
             </HeaderWrapper>
-            <CustomModal title={isModalVisible.form === "signUp" ? "Sign Up" : "Sign In"} isVisible={isModalVisible.isOpen} onCancel={toggleModal}>
+            <CustomModal title={isModalVisible.form === "signUp" ? "Գրանցում" : "Մուտք"} isVisible={isModalVisible.isOpen} onCancel={toggleModal}>
                 {isModalVisible.form === "signIn" && <SignInForm closeModal={toggleModal} />}
                 {isModalVisible.form === "signUp" && <SignUpForm closeModal={toggleModal} />}
             </CustomModal>

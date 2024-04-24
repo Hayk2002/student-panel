@@ -3,10 +3,9 @@ import {
     HeroSectionContent,
     HomePageWrapper,
     AlumniSection,
-    SliderImage
+    SliderImage, HeroSectionTitle
 } from "./styled";
 import { Container } from "../shared/styled";
-import { Typography } from "antd";
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
@@ -35,9 +34,11 @@ const Home = () => {
             <HeroSection>
                 <Container>
                     <HeroSectionContent>
-                        <Typography.Title style={{color: '#ffffff'}}>
-                            Welcome to student Panel
-                        </Typography.Title>
+                        <HeroSectionTitle>
+                            Բարի գալուստ առցանց ուսանողական և
+                            <br/>
+                            ադմինիստրատիվ ղեկավարման հարթակ
+                        </HeroSectionTitle>
                     </HeroSectionContent>
                 </Container>
             </HeroSection>
