@@ -59,7 +59,7 @@ const Header = () => {
                                             {user.lastName}
                                         </p>
                                     </HeaderProfile>
-                                    <HeaderNavListItem onClick={handleSignOut}>Sign Out</HeaderNavListItem>
+                                    <HeaderNavListItem onClick={handleSignOut}>Դուրս գալ</HeaderNavListItem>
                                 </>
                             ) : (
                                 <>

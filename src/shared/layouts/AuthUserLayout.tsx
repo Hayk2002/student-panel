@@ -1,55 +1,157 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    UploadOutlined,
+    SmileOutlined,
     UserOutlined,
-    VideoCameraOutlined,
+    EyeOutlined,
+    FileSearchOutlined,
+    FolderOpenOutlined,
 } from '@ant-design/icons';
 
-import { Button, Layout, Menu } from 'antd';
+import {Button, Layout, Menu, Skeleton} from 'antd';
 import { dispatch } from "../../store";
-import { authSignOut, setAuth} from "../../store/reducers/auth";
-import { useNavigate } from "react-router-dom";
-import {CustomSider, SiderLogoutButton} from "./styled";
+import { authSignOut } from "../../store/reducers/auth";
+import {Link, useNavigate} from "react-router-dom";
+import { CustomSider, SiderLogoutButton } from "./styled";
+import { useSelector } from "react-redux";
+import {UserType} from "../utils/enums";
+import SpinLoader from "../components/SpinLoader";
 
-const { Header, Sider, Content } = Layout;
+const { Header, Content } = Layout;
+
+const adminControlPanel = [
+    {
+        key: '1',
+        icon: <UserOutlined />,
+        label: (
+            <Link to="/profile">Անձնական էջ</Link>
+        )
+    },
+    {
+        key: '2',
+        icon: <EyeOutlined />,
+        label: (
+            <Link to="/teachers">Ուսուցիչներ</Link>
+        )
+    },
+    {
+        key: '3',
+        icon: <SmileOutlined />,
+        label: (
+            <Link to="/students">Աշակերտներ</Link>
+        )
+    },
+    {
+        key: '4',
+        icon: <FileSearchOutlined />,
+        label: (
+            <Link to="/applicants">Դիմորդներ</Link>
+        )
+    },
+];
+
+const teacherControlPanel = [
+    {
+        key: '1',
+        icon: <UserOutlined />,
+        label: (
+            <Link to="/profile">Անձնական էջ</Link>
+        )
+    },
+    {
+        key: '2',
+        icon: <SmileOutlined />,
+        label: (
+            <Link to="/students">Աշակերտներ</Link>
+        )
+    },
+    {
+        key: '3',
+        icon: <FolderOpenOutlined />,
+        label: (
+            <Link to="/gradeBook">Մատյան</Link>
+        )
+    }
+];
+
+const studentControlPanel = [
+    {
+        key: '1',
+        icon: <UserOutlined />,
+        label: (
+            <Link to="/profile">Անձնական էջ</Link>
+        )
+    },
+    {
+        key: '2',
+        icon: <FolderOpenOutlined />,
+        label: (
+            <Link to="/gradeBook">Մատյան</Link>
+        )
+    }
+];
+
+const parentControlPanel = [
+    {
+        key: '1',
+        icon: <UserOutlined />,
+        label: (
+            <Link to="/profile">Անձնական էջ</Link>
+        )
+    },
+    {
+        key: '2',
+        icon: <FolderOpenOutlined />,
+        label: (
+            <Link to="/gradeBook">Մատյան</Link>
+        )
+    }
+];
+
+const getControlPanelByUserType = (userType: string) => {
+    switch (userType) {
+        case UserType.Admin:
+            return adminControlPanel;
+        case UserType.Teacher:
+            return teacherControlPanel;
+        case UserType.Student:
+            return studentControlPanel;
+        case UserType.Parent:
+            return parentControlPanel;
+        default:
+            break
+    }
+};
 
 const AuthUserLayout = ({ children }: { children: React.ReactNode }) => {
     const navigate = useNavigate();
-    const [collapsed, setCollapsed] = useState(false);
+    const user = useSelector((state: any) => state.auth.user);
+
+    const [collapsed, setCollapsed] = useState<boolean>(false);
+    const [menuItems, setMenuItems] = useState<any>([]);
 
     const handleSignOut = async () => {
         dispatch(authSignOut(() => navigate('/')));
     };
 
-    return (
+    useEffect(() => {
+        if (user) {
+            setMenuItems(getControlPanelByUserType(user?.role));
+        }
+    }, [user]);
+
+    return !user ? <SpinLoader /> : (
         <Layout>
             <CustomSider trigger={null} collapsible collapsed={collapsed} style={{display: "flex", flexDirection: 'column'}}>
                 <Menu
                     theme="dark"
                     mode="inline"
                     defaultSelectedKeys={['1']}
-                    items={[
-                        {
-                            key: '1',
-                            icon: <UserOutlined />,
-                            label: 'nav 1',
-                        },
-                        {
-                            key: '2',
-                            icon: <VideoCameraOutlined />,
-                            label: 'nav 2',
-                        },
-                        {
-                            key: '3',
-                            icon: <UploadOutlined />,
-                            label: 'nav 3',
-                        },
-                    ]}
+                    items={menuItems}
                 />
                 <SiderLogoutButton type="primary" onClick={handleSignOut}>
-                    Logout
+                    Դուրս գալ
                 </SiderLogoutButton>
             </CustomSider>
             <Layout>

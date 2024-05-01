@@ -9,6 +9,7 @@ import './index.css';
 
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from "antd";
+import SpinLoader from "./shared/components/SpinLoader";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,14 +17,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <ReduxProvider store={store}>
-      <Suspense
-          fallback={
-              <Spin
-                  style={{ position: 'absolute', top: '50%', left: '50%' }}
-                  indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
-              />
-          }
-      >
+      <Suspense fallback={<SpinLoader />}>
           <App />
       </Suspense>
     </ReduxProvider>

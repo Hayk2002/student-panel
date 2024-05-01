@@ -1,4 +1,4 @@
-import {Button, Form, Input, message} from "antd";
+import {Button, Form, Input, message, Select} from "antd";
 import { authSignUp, authSignIn } from "../../store/reducers/auth";
 import { dispatch } from "../../store";
 import {useSelector} from "react-redux";
@@ -6,9 +6,9 @@ import {useSelector} from "react-redux";
 const SignUpForm = ({ closeModal }: { closeModal: () => void }) => {
     const isLoading = useSelector((state: any) => state.auth.loading);
 
-    const handleSignUp = ({ firstName, lastName, email, password }: any) => {
-        dispatch(authSignUp({firstName, lastName, email, password}, (msg: string) => {
-            dispatch(authSignIn({firstName, lastName, email, password}, () => {}, (msg: string) => message.error(msg)));
+    const handleSignUp = ({ firstName, lastName, email, role, password }: any) => {
+        dispatch(authSignUp({ firstName, lastName, role, email, password }, (msg: string) => {
+            dispatch(authSignIn({ email, password }, () => {}, (msg: string) => message.error(msg)));
             message.success(msg);
             closeModal();
         }, (msg: string) => {
@@ -35,6 +35,20 @@ const SignUpForm = ({ closeModal }: { closeModal: () => void }) => {
                 name="lastName"
             >
                 <Input />
+            </Form.Item>
+
+            <Form.Item
+                label="Դերը"
+                name="role"
+            >
+                <Select
+                    options={[
+                        { label: "Ադմինիստրատոր", value: "admin" },
+                        { label: "Ուսուցիչ", value: "teacher" },
+                        { label: "Աշակերտ", value: "student" },
+                        { label: "Ծնող", value: "parent" },
+                    ]}
+                />
             </Form.Item>
 
             <Form.Item

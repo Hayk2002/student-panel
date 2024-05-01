@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import AppRoutes from "./routes";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, child, db, get, ref} from "./firebase-config";
@@ -18,7 +18,8 @@ const App = () => {
                         setAuth({
                             user: {
                                 firstName: snapshot.val().firstName,
-                                lastName: snapshot.val().lastName
+                                lastName: snapshot.val().lastName,
+                                role: snapshot.val().role,
                             }
                         })
                     )

@@ -27,14 +27,15 @@ export default authSlice.reducer;
 
 export const { setLoading, setAuth } = authSlice.actions;
 
-export const authSignUp = ({ email, password, firstName, lastName }: any, successCallback: (msg: string) => void, failureCallback: (msg: string) => void) => {
+export const authSignUp = ({ email, password, role, firstName, lastName }: any, successCallback: (msg: string) => void, failureCallback: (msg: string) => void) => {
     return async (dispatch: any) => {
         try {
             dispatch(setLoading(true));
             const credentials = await createUserWithEmailAndPassword(auth, email, password);
             await set(ref(db, `UsersAuthList/${credentials.user.uid}`), {
                 firstName,
-                lastName
+                lastName,
+                role
             });
 
             successCallback("Ձեր հաշիվը ստեղծված է։");
@@ -59,7 +60,8 @@ export const authSignIn = ({ email, password }: any, successCallback: () => void
                     setAuth({
                         user: {
                             firstName: snapshot.val().firstName,
-                            lastName: snapshot.val().lastName
+                            lastName: snapshot.val().lastName,
+                            role: snapshot.val().role
                         }
                     })
                 )
