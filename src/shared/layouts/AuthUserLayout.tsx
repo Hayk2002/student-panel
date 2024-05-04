@@ -60,13 +60,6 @@ const teacherControlPanel = [
         )
     },
     {
-        key: '2',
-        icon: <SmileOutlined />,
-        label: (
-            <Link to="/students">Աշակերտներ</Link>
-        )
-    },
-    {
         key: '3',
         icon: <FolderOpenOutlined />,
         label: (
@@ -87,7 +80,7 @@ const studentControlPanel = [
         key: '2',
         icon: <FolderOpenOutlined />,
         label: (
-            <Link to="/gradeBook">Մատյան</Link>
+            <Link to="/gradeBook">Օրագիր</Link>
         )
     }
 ];
@@ -102,9 +95,9 @@ const parentControlPanel = [
     },
     {
         key: '2',
-        icon: <FolderOpenOutlined />,
+        icon: <SmileOutlined />,
         label: (
-            <Link to="/gradeBook">Մատյան</Link>
+            <Link to="/students">Իմ երեխաները</Link>
         )
     }
 ];

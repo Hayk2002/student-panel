@@ -10,12 +10,24 @@ import {
 import PDF from "../assets/dimum-hayt.pdf";
 import CustomModal from "../shared/components/CustomModal";
 import {useState} from "react";
-import {Button, DatePicker, Form, Input, Select} from "antd";
+import {Button, DatePicker, Form, Input, message, Select} from "antd";
+import {dispatch} from "../store";
+import {createApplicant} from "../store/reducers/applicants";
+import {useSelector} from "react-redux";
+import dayjs from "dayjs";
 
 const ApplicantPage = () => {
+    const isLoading = useSelector((state: any) => state.applicants.loading);
     const [isVisible, setIsVisible] = useState(false);
 
-    const handleSubmit = () => {};
+    const handleSubmit = (data: any) => {
+        const applicant = {
+            ...data,
+            dob: dayjs(data.dob).format("YYYY-MM-DD")
+        }
+        console.log(applicant);
+        dispatch(createApplicant(applicant, () => message.success("Ձեր դիմումն ընդւնված է!")));
+    };
 
     return (
         <>
@@ -68,13 +80,23 @@ const ApplicantPage = () => {
                     <Form.Item
                         label="Էլ․ հասցե"
                         name="email"
+                        rules={[
+                            {
+                                type: 'email',
+                                message: 'Մուտքագրված հասցեն սխալ է'
+                            },
+                            {
+                                required: true,
+                                message: 'Էլ․ հասցեն պարտադիր է'
+                            }
+                        ]}
                     >
                         <Input/>
                     </Form.Item>
 
                     <Form.Item
                         label="Անձը հաստատող փաստաթղթի տվյալներ"
-                        name="email"
+                        name="social_id"
                     >
                         <Input/>
                     </Form.Item>
@@ -84,7 +106,7 @@ const ApplicantPage = () => {
                             label="Ծննդյան տարեթիվ"
                             name="dob"
                         >
-                            <DatePicker style={{width: "100%"}}/>
+                            <DatePicker style={{ width: "100%" }}/>
                         </Form.Item>
                         <Form.Item
                             label="Սեռ"
@@ -111,7 +133,7 @@ const ApplicantPage = () => {
 
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" loading={false} style={{ display: "flex", margin: "10px auto 0" }}>
+                        <Button type="primary" htmlType="submit" loading={isLoading} style={{ display: "flex", margin: "10px auto 0" }}>
                             Հաստատել
                         </Button>
                     </Form.Item>

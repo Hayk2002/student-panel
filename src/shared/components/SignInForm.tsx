@@ -22,6 +22,16 @@ const SignInForm = ({ closeModal }: { closeModal: () => void }) => {
             <Form.Item
                 label="Էլ․ հասցե"
                 name="email"
+                rules={[
+                    {
+                        type: 'email',
+                        message: 'Մուտքագրված հասցեն սխալ է'
+                    },
+                    {
+                        required: true,
+                        message: 'Էլ․ հասցեն պարտադիր է'
+                    }
+                ]}
             >
                 <Input />
             </Form.Item>
