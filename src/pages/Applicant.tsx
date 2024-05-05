@@ -23,7 +23,8 @@ const ApplicantPage = () => {
     const handleSubmit = (data: any) => {
         const applicant = {
             ...data,
-            dob: dayjs(data.dob).format("YYYY-MM-DD")
+            dob: dayjs(data.dob).format("YYYY-MM-DD"),
+            status: "pending"
         }
         console.log(applicant);
         dispatch(createApplicant(applicant, () => message.success("Ձեր դիմումն ընդւնված է!")));

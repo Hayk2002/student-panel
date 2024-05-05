@@ -120,7 +120,7 @@ export const AboutUsText = styled.p`
     margin: 0;
 `;
 
-// APPLICANT US PAGE
+// APPLICANTS PAGE
 
 export const ApplicantPageWrapper = styled.div`
     padding: 40px 0;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {Container} from "../styled";
 import {Link} from "react-router-dom";
+import {List} from "antd";
 
 // PROFILE BLOCK STYLES
 
@@ -154,4 +155,23 @@ export const FooterLink = styled.a`
 export const ModalTitle = styled.h5`
     font-size: 24px;
     text-align: center;
+`;
+
+// CUSTOM LIST STYLES
+
+export const CustomListItem = styled(List.Item)`
+    cursor: pointer;
+    border-radius: 12px;
+    border: 1px solid #d3d3d3;
+    border-block-end: 1px solid #d3d3d3 !important;
+    transition: ease-in-out 0.2s;
+
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+`
+
+export const CustomListMeta = styled(List.Item.Meta)`
+    padding-left: 8px;
+    align-items: center !important;
 `;
