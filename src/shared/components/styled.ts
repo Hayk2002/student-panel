@@ -175,3 +175,16 @@ export const CustomListMeta = styled(List.Item.Meta)`
     padding-left: 8px;
     align-items: center !important;
 `;
+
+// FILTER PANEL STYLES
+
+export const FilterPanel = styled.div`
+    display: flex;
+    margin-bottom: 40px;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const FilterPanelItem = styled.div`
+    margin: 0 10px;
+`;

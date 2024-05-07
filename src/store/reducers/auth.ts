@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, child, db, get, ref, set } from "../../firebase-config";
-import {dispatch} from "../index";
 
 const dbref = ref(db);
 
 const initialState = {
     loading: false,
-    user: null
+    user: null,
+    allUsers: null
 };
 
 const authSlice = createSlice({
@@ -20,22 +20,23 @@ const authSlice = createSlice({
         setAuth(state, { payload }) {
             state.user = payload?.user;
         },
+        getUsers(state, { payload }) {
+            state.allUsers = payload?.allUsers;
+        }
     }
 });
 
 export default authSlice.reducer;
 
-export const { setLoading, setAuth } = authSlice.actions;
+export const { setLoading, setAuth, getUsers } = authSlice.actions;
 
-export const authSignUp = ({ email, password, role, firstName, lastName }: any, successCallback: (msg: string) => void, failureCallback: (msg: string) => void) => {
+export const authSignUp = ({ email, password, ...rest }: any, successCallback: (msg: string) => void, failureCallback: (msg: string) => void) => {
     return async (dispatch: any) => {
         try {
             dispatch(setLoading(true));
             const credentials = await createUserWithEmailAndPassword(auth, email, password);
             await set(ref(db, `UsersAuthList/${credentials.user.uid}`), {
-                firstName,
-                lastName,
-                role
+                ...rest
             });
 
             successCallback("Ձեր հաշիվը ստեղծված է։");
@@ -58,11 +59,7 @@ export const authSignIn = ({ email, password }: any, successCallback: () => void
             if (snapshot.exists()) {
                 dispatch(
                     setAuth({
-                        user: {
-                            firstName: snapshot.val().firstName,
-                            lastName: snapshot.val().lastName,
-                            role: snapshot.val().role
-                        }
+                        user: snapshot.val()
                     })
                 )
             }
@@ -87,3 +84,30 @@ export const authSignOut = (callback: () => void) => {
         callback()
     }
 }
+
+export const fetchAllUsers = () => async (dispatch: any) => {
+    try {
+        dispatch(setLoading(true));
+        const snapshot = await get(child(dbref, "UsersAuthList"));
+
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            const usersList = [];
+
+            for (let record in data) {
+                const newRecord = {
+                    ...data[record],
+                    id: record
+                };
+
+                usersList.push(newRecord);
+            }
+
+            dispatch(getUsers({ allUsers: usersList }));
+        }
+    } catch (error: any) {
+        console.log(error);
+    } finally {
+        dispatch(setLoading(false));
+    }
+};

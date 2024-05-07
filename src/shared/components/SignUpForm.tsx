@@ -2,12 +2,16 @@ import {Button, Form, Input, message, Select} from "antd";
 import { authSignUp, authSignIn } from "../../store/reducers/auth";
 import { dispatch } from "../../store";
 import {useSelector} from "react-redux";
+import {classRooms, subjectsList, UserType} from "../utils/enums";
+import {useState} from "react";
 
 const SignUpForm = ({ closeModal }: { closeModal: () => void }) => {
     const isLoading = useSelector((state: any) => state.auth.loading);
 
-    const handleSignUp = ({ firstName, lastName, email, role, password }: any) => {
-        dispatch(authSignUp({ firstName, lastName, role, email, password }, (msg: string) => {
+    const [selectedRole, setSelectedRole] = useState(null);
+
+    const handleSignUp = ({ email, password, ...rest }: any) => {
+        dispatch(authSignUp({ email, password, ...rest }, (msg: string) => {
             dispatch(authSignIn({ email, password }, () => {}, (msg: string) => message.error(msg)));
             message.success(msg);
             closeModal();
@@ -48,8 +52,31 @@ const SignUpForm = ({ closeModal }: { closeModal: () => void }) => {
                         { label: "Աշակերտ", value: "student" },
                         { label: "Ծնող", value: "parent" },
                     ]}
+                    onChange={(value) => setSelectedRole(value)}
                 />
             </Form.Item>
+
+            {selectedRole === UserType.Student && (
+                <Form.Item
+                    label="Դասարան"
+                    name="class"
+                >
+                    <Select
+                        options={classRooms}
+                    />
+                </Form.Item>
+            )}
+
+            {selectedRole === UserType.Teacher && (
+                <Form.Item
+                    label="Առարկա"
+                    name="subject"
+                >
+                    <Select
+                        options={subjectsList}
+                    />
+                </Form.Item>
+            )}
 
             <Form.Item
                 label="Էլ․ հասցե"
