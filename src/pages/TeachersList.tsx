@@ -23,7 +23,7 @@ const TeachersList = () => {
             const data = allUsers.filter((user: any) => (user.role === UserType.Teacher));
             setTeachers(data);
         }
-    }, [allUsers, selectedSubject]);
+    }, [allUsers]);
 
     useEffect(() => {
         if (allUsers?.length && selectedSubject) {

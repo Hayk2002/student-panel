@@ -24,7 +24,7 @@ const StudentsList = () => {
             const data = allUsers.filter((user: any) => (user.role === UserType.Student));
             setStudents(data);
         }
-    }, [allUsers, selectedClassRoom]);
+    }, [allUsers]);
 
     useEffect(() => {
         if (allUsers?.length && selectedClassRoom) {
