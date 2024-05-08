@@ -165,6 +165,7 @@ export const CustomListItem = styled(List.Item)`
     border: 1px solid #d3d3d3;
     border-block-end: 1px solid #d3d3d3 !important;
     transition: ease-in-out 0.2s;
+    margin-bottom: 20px;
 
     &:hover {
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
