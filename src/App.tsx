@@ -1,29 +1,19 @@
 import React, { useEffect } from 'react';
-import AppRoutes from "./routes";
-import {onAuthStateChanged} from "firebase/auth";
-import {auth, child, db, get, ref} from "./firebase-config";
-import {dispatch} from "./store";
-import {setAuth} from "./store/reducers/auth";
 
-const dbref = ref(db);
+import AppRoutes from "./routes";
+import { dispatch } from "./store";
+import { setAuth } from "./store/reducers/auth";
 
 const App = () => {
     useEffect(() => {
-        onAuthStateChanged(auth, async (currentUser: any) => {
-            if (currentUser) {
-                const snapshot = await get(child(dbref, `UsersAuthList/${currentUser.uid}`));
+        const isUserAuthenticated = localStorage.getItem('isUserAuthenticated');
 
-                if (snapshot.exists()) {
-                    dispatch(
-                        setAuth({
-                            user: snapshot.val()
-                        })
-                    )
-                }
-            }
-        })
+        dispatch(
+            setAuth({
+                user: JSON.parse(isUserAuthenticated as string)
+            })
+        )
     }, []);
-
 
     return (
         <AppRoutes/>

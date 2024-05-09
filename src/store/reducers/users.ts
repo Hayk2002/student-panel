@@ -1,5 +1,5 @@
-import {child, db, get, ref, set} from "../../firebase-config";
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { child, db, get, ref, set, remove } from "../../firebase-config";
 
 const dbref = ref(db);
 
@@ -45,6 +45,22 @@ export const fetchAllUsers = () => async (dispatch: any) => {
 
             dispatch(getUsers({ allUsers: usersList }));
         }
+    } catch (error: any) {
+        console.log(error);
+    } finally {
+        dispatch(setLoading(false));
+    }
+};
+
+export const deleteUser = (id: string, callback: any) => async (dispatch: any) => {
+    try {
+        dispatch(setLoading(true));
+
+        await remove(ref(db, `UsersAuthList/${id}`));
+
+        dispatch(fetchAllUsers());
+
+        callback();
     } catch (error: any) {
         console.log(error);
     } finally {

@@ -1,18 +1,18 @@
-import {Button, Form, Input, message, Select} from "antd";
-import { authSignUp, authSignIn } from "../../store/reducers/auth";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Button, Form, Input, message, Select } from "antd";
+
 import { dispatch } from "../../store";
-import {useSelector} from "react-redux";
-import {classRooms, subjectsList, UserType} from "../utils/enums";
-import {useState} from "react";
+import { authSignUp } from "../../store/reducers/auth";
+import { classRooms, subjectsList, UserType } from "../utils/enums";
 
 const SignUpForm = ({ closeModal }: { closeModal: () => void }) => {
     const isLoading = useSelector((state: any) => state.auth.loading);
 
     const [selectedRole, setSelectedRole] = useState(null);
 
-    const handleSignUp = ({ email, password, role, ...rest }: any) => {
-        dispatch(authSignUp({ email, password, role, ...rest }, (msg: string) => {
-            // dispatch(authSignIn({ email, password }, () => {}, (msg: string) => message.error(msg)));
+    const handleSignUp = ({ email, password, ...rest }: any) => {
+        dispatch(authSignUp({ email, password, ...rest }, (msg: string) => {
             message.success(msg);
             closeModal();
         }, (msg: string) => {

@@ -68,10 +68,6 @@ export const HeaderNavListItem = styled.li`
     color: #2557a7;
     cursor: pointer;
 
-    &:first-child {
-        border-right: 1px solid #878686;
-    }
-
     &:hover {
         color: #07357a;
     }

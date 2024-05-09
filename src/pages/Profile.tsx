@@ -1,12 +1,14 @@
-import {Avatar, Button, Card, Divider, Modal} from "antd";
+import {Avatar, Button, Card, List, message, Tag, Typography} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import {useSelector} from "react-redux";
-import {ProfileBlock} from "../shared/components/styled";
+import {CustomListItem, CustomListMeta, ProfileBlock} from "../shared/components/styled";
 import {UserType} from "../shared/utils/enums";
 import styled from "styled-components";
 import SignUpForm from "../shared/components/SignUpForm";
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import CustomModal from "../shared/components/CustomModal";
+import {deleteUser, fetchAllUsers} from "../store/reducers/users";
+import {dispatch} from "../store";
 
 const returnUserRole = (role: string) => {
     switch (role) {
@@ -32,17 +34,35 @@ const ProfilePageBlock = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 20px;
 `;
 
 const Profile = () => {
     const user = useSelector((state: any) => state.auth.user);
+    const isLoading = useSelector((state: any) => state.users.loading);
+    const allUsers = useSelector((state: any) => state.users.allUsers);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [deleteModal, setDeleteModal] = useState({
+        userId: "",
+        open: false
+    });
+
+    useEffect(() => {
+        dispatch(fetchAllUsers());
+    }, []);
+
+    const handleUserDelete = () => {
+        dispatch(deleteUser(deleteModal.userId, () => {
+            message.success('Օգտատերը հաջողությամբ ջնջված է');
+            setDeleteModal({ ...deleteModal, open: false });
+        }));
+    };
 
     return (
         <ProfilePageWrapper>
             <ProfilePageBlock>
-                <Card style={{ width: 300, marginTop: 16 }}>
+                <Card style={{ width: 300 }}>
                     <Card.Meta
                         avatar={<Avatar size={50} icon={<UserOutlined />} />}
                         title={`${user?.firstName} ${user?.lastName}`}
@@ -51,13 +71,54 @@ const Profile = () => {
                 </Card>
                 {user?.role === UserType.Admin && (
                     <>
-                        <Button type="primary" onClick={() => setIsModalOpen(true)}>Ավելացնել օգտատերի</Button>
+                        <Button type="primary" onClick={() => setIsModalOpen(true)}>Ավելացնել օգտատեր</Button>
                         <CustomModal title="Օգտատերի գրանցում" isVisible={isModalOpen} onCancel={() => setIsModalOpen(false)}>
                             <SignUpForm closeModal={() => setIsModalOpen(false)}/>
                         </CustomModal>
                     </>
                 )}
             </ProfilePageBlock>
+            {user?.role === UserType.Admin && (
+                <>
+                    <Typography.Title level={2} style={{ color: "rgb(54 90 124)" }}>Բոլոր օգտատերերը</Typography.Title>
+                    <List
+                        loading={isLoading}
+                        itemLayout="horizontal"
+                        dataSource={allUsers?.filter((record: any) => record?.id !== user?.id)}
+                        renderItem={(item: any) => (
+                            <CustomListItem
+                                actions={[
+                                    <Tag color="blue">{returnUserRole(item.role)}</Tag>,
+                                    <Button
+                                        danger
+                                        type="primary"
+                                        onClick={() => setDeleteModal({ userId: item.id, open: true })}
+                                    >
+                                        Ջնջել
+                                    </Button>
+                                ]}
+                            >
+                                <CustomListMeta
+                                    avatar={<Avatar icon={<UserOutlined />} />}
+                                    title={`${item?.firstName} ${item?.lastName}`}
+                                />
+                            </CustomListItem>
+                        )}
+                    />
+                </>
+            )}
+            <CustomModal title="Ջնջել օգտատերի հաշիվը" onCancel={() => setDeleteModal({...deleteModal, open: false})} isVisible={deleteModal.open}>
+                <Typography.Text style={{ display: "block", textAlign: "center" }}>
+                    Տվյալ օգտատերը այլևս չի կարողանա ստեղծել հաշիվ նույն էլեկտրոնային հասցեյով։
+                </Typography.Text>
+                <br/>
+                <Button
+                    danger
+                    type="primary"
+                    loading={isLoading}
+                    style={{ display: "block", margin: "0 auto" }}
+                    onClick={handleUserDelete}>Ջնջել</Button>
+            </CustomModal>
         </ProfilePageWrapper>
     );
 };
