@@ -1,9 +1,12 @@
-import {Avatar, Card, Divider} from "antd";
+import {Avatar, Button, Card, Divider, Modal} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import {useSelector} from "react-redux";
 import {ProfileBlock} from "../shared/components/styled";
 import {UserType} from "../shared/utils/enums";
 import styled from "styled-components";
+import SignUpForm from "../shared/components/SignUpForm";
+import {useState} from "react";
+import CustomModal from "../shared/components/CustomModal";
 
 const returnUserRole = (role: string) => {
     switch (role) {
@@ -25,18 +28,36 @@ const ProfilePageWrapper = styled.div`
     flex-direction: column;
 `;
 
+const ProfilePageBlock = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
+
 const Profile = () => {
     const user = useSelector((state: any) => state.auth.user);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     return (
         <ProfilePageWrapper>
-            <Card style={{ width: 300, marginTop: 16 }}>
-                <Card.Meta
-                    avatar={<Avatar size={50} icon={<UserOutlined />} />}
-                    title={`${user?.firstName} ${user?.lastName}`}
-                    description={returnUserRole(user?.role)}
-                />
-            </Card>
+            <ProfilePageBlock>
+                <Card style={{ width: 300, marginTop: 16 }}>
+                    <Card.Meta
+                        avatar={<Avatar size={50} icon={<UserOutlined />} />}
+                        title={`${user?.firstName} ${user?.lastName}`}
+                        description={returnUserRole(user?.role)}
+                    />
+                </Card>
+                {user?.role === UserType.Admin && (
+                    <>
+                        <Button type="primary" onClick={() => setIsModalOpen(true)}>Ավելացնել օգտատերի</Button>
+                        <CustomModal title="Օգտատերի գրանցում" isVisible={isModalOpen} onCancel={() => setIsModalOpen(false)}>
+                            <SignUpForm closeModal={() => setIsModalOpen(false)}/>
+                        </CustomModal>
+                    </>
+                )}
+            </ProfilePageBlock>
         </ProfilePageWrapper>
     );
 };

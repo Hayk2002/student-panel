@@ -14,7 +14,7 @@ const Diary = () => {
     const [dataSource, setDataSource] = useState<any>([]);
     const [gradesData, setGradesData] = useState([]);
     const [selectedDate, setSelectedDate] = useState("");
-    const [parentStudents, setParentStudents] = useState([]);
+    const [parentChildren, setParentChildren] = useState([]);
     const [selectedStudent, setSelectedStudent] = useState(null);
 
     useEffect(() => {
@@ -22,21 +22,21 @@ const Diary = () => {
     }, []);
 
     useEffect(() => {
-        if (allUsers?.length) {
-            const data = allUsers.filter((user: any) => (user.role === UserType.Student));
+        if (user?.role === UserType.Parent) {
+            const children = user?.children;
 
-            const studentsList = data.map((student: any) => ({ label: `${student.firstName} ${student.lastName}`, value: student.id }));
-            setParentStudents(studentsList);
+            const childrenList = children?.map((child: any) => ({ label: `${child.firstName} ${child.lastName}`, value: child.id }));
+            setParentChildren(childrenList);
         }
-    }, [allUsers]);
+    }, [user]);
 
     useEffect(() => {
-        if (allUsers?.length && selectedStudent) {
-            const data = allUsers.filter((user: any) => (user.role === UserType.Student));
+        if (user?.role === UserType.Parent && selectedStudent) {
+            const children = user?.children;
 
-            const student = data?.find((student: any) => (student.id === selectedStudent));
+            const child = children?.find((student: any) => (student.id === selectedStudent));
 
-            const tableList = student.grades.map((gradeData: any, index: number) => ({
+            const tableList = child.grades.map((gradeData: any, index: number) => ({
                 key: index,
                 name: gradeData.subject,
                 grade: gradeData.grade,
@@ -68,7 +68,7 @@ const Diary = () => {
             <FilterPanel>
                 {user.role === UserType.Parent && (
                     <FilterPanelItem>
-                        <Select options={parentStudents} placeholder="Իմ Երեխաները" style={{ width: 150 }} />
+                        <Select options={parentChildren} placeholder="Իմ Երեխաները" style={{ width: 150 }} />
                     </FilterPanelItem>
                 )}
                 <FilterPanelItem>

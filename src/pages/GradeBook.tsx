@@ -1,9 +1,9 @@
 import React, {createContext, useContext, useEffect, useRef, useState} from "react";
 import {dispatch} from "../store";
-import {fetchAllUsers} from "../store/reducers/users";
+import {addStudentGrades, fetchAllUsers} from "../store/reducers/users";
 import {useSelector} from "react-redux";
 import {classRooms, UserType} from "../shared/utils/enums";
-import { DatePicker, Select, Table, Form, Input, Radio } from "antd";
+import {DatePicker, Select, Table, Form, Input, Radio, message} from "antd";
 import dayjs from "dayjs";
 import {FilterPanel, FilterPanelItem} from "../shared/components/styled";
 
@@ -14,6 +14,12 @@ interface Item {
     name: string;
     age: string;
     address: string;
+    firstName: string;
+    lastName: string;
+    role: string;
+    grades: any;
+    id: string;
+    absence: number;
 }
 
 interface EditableRowProps {
@@ -59,7 +65,18 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
     const save = async () => {
         try {
             const values = await form.validateFields();
-            console.log(values);
+
+            // const studentData = {
+            //     firstName: record.firstName,
+            //     lastName: record.lastName,
+            //     id: record.id,
+            //     role: record.role,
+            //     grades: []
+            // }
+            //
+            // const newGrades = [ { subject: "", grade: values.grade, absence: record.absence }];
+            //
+            // dispatch(addStudentGrades(studentData, newGrades, () => message.success("Մատյանը փոփոխված է")));
 
             toggleEdit();
             handleSave({ ...record, ...values });
@@ -101,6 +118,7 @@ const GradeBook = () => {
     const [dataSource, setDataSource] = useState<any>([]);
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedClassRoom, setSelectedClassRoom] = useState(null);
+    const [selectedRecord, setSelectedRecord] = useState<any>(null);
 
     useEffect(() => {
         dispatch(fetchAllUsers());
@@ -113,6 +131,8 @@ const GradeBook = () => {
             const tableList = data.map((student: any, index: number) => ({
                 id: student.id,
                 key: student.id,
+                firstName: student.firstName,
+                lastName: student.lastName,
                 name: `${student.firstName} ${student.lastName}`,
                 grade: student.grade,
                 absence: student.absence
@@ -123,7 +143,15 @@ const GradeBook = () => {
     }, [allUsers, selectedClassRoom]);
 
     const onAbsenceChange = (e: any) => {
-        console.log(e.target.value);
+        // const requestData = {
+        //     ...selectedRecord,
+        //     absence: e.target.value,
+        // };
+        //
+        // const newGrades = [ { subject: "", grade: values.grade, absence: record.absence }];
+        //
+        // dispatch(addStudentGrades(requestData, newGrades, () => message.success("Մատյանը փոփոխված է")));
+
     };
 
     const handleSave = (row: any) => {
@@ -193,6 +221,11 @@ const GradeBook = () => {
                 components={components}
                 dataSource={dataSource}
                 rowClassName={() => 'editable-row'}
+                onRow={(record, rowIndex) => {
+                    return {
+                        onClick: () => setSelectedRecord(record), // click row
+                    };
+                }}
             />
         </>
     );

@@ -37,13 +37,20 @@ const adminControlPanel = [
     },
     {
         key: '3',
+        icon: <EyeOutlined />,
+        label: (
+            <Link to="/parents">Ծնողներ</Link>
+        )
+    },
+    {
+        key: '4',
         icon: <SmileOutlined />,
         label: (
             <Link to="/students">Աշակերտներ</Link>
         )
     },
     {
-        key: '4',
+        key: '5',
         icon: <FileSearchOutlined />,
         label: (
             <Link to="/applicants">Դիմորդներ</Link>
@@ -136,7 +143,7 @@ const AuthUserLayout = ({ children }: { children: React.ReactNode }) => {
 
     return !user ? <SpinLoader /> : (
         <Layout>
-            <CustomSider trigger={null} collapsible collapsed={collapsed} style={{display: "flex", flexDirection: 'column'}}>
+            <CustomSider trigger={null} collapsible collapsed={collapsed} style={{ display: "flex", flexDirection: 'column' }}>
                 <Menu
                     theme="dark"
                     mode="inline"
@@ -147,7 +154,7 @@ const AuthUserLayout = ({ children }: { children: React.ReactNode }) => {
                     Դուրս գալ
                 </SiderLogoutButton>
             </CustomSider>
-            <Layout>
+            <Layout style={{ backgroundColor: "#d7d7d7" }}>
                 <Header style={{ padding: 0, background: 'rgb(255, 255, 255)' }}>
                     <Button
                         type="text"

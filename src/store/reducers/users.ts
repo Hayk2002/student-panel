@@ -1,4 +1,4 @@
-import {child, db, get, ref} from "../../firebase-config";
+import {child, db, get, ref, set} from "../../firebase-config";
 import {createSlice} from "@reduxjs/toolkit";
 
 const dbref = ref(db);
@@ -45,6 +45,40 @@ export const fetchAllUsers = () => async (dispatch: any) => {
 
             dispatch(getUsers({ allUsers: usersList }));
         }
+    } catch (error: any) {
+        console.log(error);
+    } finally {
+        dispatch(setLoading(false));
+    }
+};
+
+export const addParentChildren = (parent: any, children: any, callback: any) => async (dispatch: any) => {
+    try {
+        dispatch(setLoading(true));
+
+        await set(ref(db, 'UsersAuthList/' + parent.id), {
+            ...parent,
+            children
+        });
+
+        callback();
+    } catch (error: any) {
+        console.log(error);
+    } finally {
+        dispatch(setLoading(false));
+    }
+};
+
+export const addStudentGrades = (student: any, newGrades: any, callback: any) => async (dispatch: any) => {
+    try {
+        dispatch(setLoading(true));
+
+        await set(ref(db, 'UsersAuthList/' + student.id), {
+            ...student,
+            grades: [...student?.grades, ...newGrades]
+        });
+
+        callback();
     } catch (error: any) {
         console.log(error);
     } finally {

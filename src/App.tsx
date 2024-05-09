@@ -16,11 +16,7 @@ const App = () => {
                 if (snapshot.exists()) {
                     dispatch(
                         setAuth({
-                            user: {
-                                firstName: snapshot.val().firstName,
-                                lastName: snapshot.val().lastName,
-                                role: snapshot.val().role,
-                            }
+                            user: snapshot.val()
                         })
                     )
                 }
