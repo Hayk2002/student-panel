@@ -84,30 +84,3 @@ export const authSignOut = (callback: () => void) => {
         callback()
     }
 }
-
-export const fetchAllUsers = () => async (dispatch: any) => {
-    try {
-        dispatch(setLoading(true));
-        const snapshot = await get(child(dbref, "UsersAuthList"));
-
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            const usersList = [];
-
-            for (let record in data) {
-                const newRecord = {
-                    ...data[record],
-                    id: record
-                };
-
-                usersList.push(newRecord);
-            }
-
-            dispatch(getUsers({ allUsers: usersList }));
-        }
-    } catch (error: any) {
-        console.log(error);
-    } finally {
-        dispatch(setLoading(false));
-    }
-};

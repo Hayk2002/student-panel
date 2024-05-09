@@ -6,10 +6,10 @@ import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {UserOutlined} from "@ant-design/icons";
 import {dispatch} from "../store";
-import {fetchAllUsers} from "../store/reducers/auth";
+import {fetchAllUsers} from "../store/reducers/users";
 
 const StudentsList = () => {
-    const allUsers = useSelector((state: any) => state.auth.allUsers);
+    const allUsers = useSelector((state: any) => state.users.allUsers);
     const isLoading = useSelector((state: any) => state.auth.loading);
 
     const [students, setStudents] = useState([]);
@@ -24,7 +24,7 @@ const StudentsList = () => {
             const data = allUsers.filter((user: any) => (user.role === UserType.Student));
             setStudents(data);
         }
-    }, [allUsers]);
+    }, [allUsers, selectedClassRoom]);
 
     useEffect(() => {
         if (allUsers?.length && selectedClassRoom) {

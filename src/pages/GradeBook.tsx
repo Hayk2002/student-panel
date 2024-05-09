@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useRef, useState} from "react";
 import {dispatch} from "../store";
-import {fetchAllUsers} from "../store/reducers/auth";
+import {fetchAllUsers} from "../store/reducers/users";
 import {useSelector} from "react-redux";
 import {classRooms, UserType} from "../shared/utils/enums";
 import { DatePicker, Select, Table, Form, Input, Radio } from "antd";
@@ -59,6 +59,7 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
     const save = async () => {
         try {
             const values = await form.validateFields();
+            console.log(values);
 
             toggleEdit();
             handleSave({ ...record, ...values });
@@ -75,10 +76,10 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
                 style={{ margin: 0 }}
                 name={dataIndex}
             >
-                <Input ref={inputRef} onPressEnter={save} onBlur={save} />
+                <Input ref={inputRef} onPressEnter={save} onBlur={save} style={{ width: "300px" }} />
             </Form.Item>
         ) : (
-            <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={toggleEdit}>
+            <div className="editable-cell-value-wrap" style={{ paddingRight: 24, width: 300 }} onClick={toggleEdit}>
                 {children}
             </div>
         );
@@ -95,11 +96,9 @@ const components = {
 };
 
 const GradeBook = () => {
-    const allUsers = useSelector((state: any) => state.auth.allUsers);
-    const user = useSelector((state: any) => state.auth.user);
+    const allUsers = useSelector((state: any) => state.users.allUsers);
 
     const [dataSource, setDataSource] = useState<any>([]);
-    const [students, setStudents] = useState([]);
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedClassRoom, setSelectedClassRoom] = useState(null);
 
@@ -111,11 +110,9 @@ const GradeBook = () => {
         if (allUsers?.length) {
             const data = allUsers.filter((user: any) => (user.role === UserType.Student && user.class === selectedClassRoom));
 
-            const studentsList = data.map((student: any) => ({ label: `${student.firstName} ${student.lastName}`, value: student.id }));
-            setStudents(studentsList);
-
             const tableList = data.map((student: any, index: number) => ({
-                key: index,
+                id: student.id,
+                key: student.id,
                 name: `${student.firstName} ${student.lastName}`,
                 grade: student.grade,
                 absence: student.absence
@@ -182,16 +179,9 @@ const GradeBook = () => {
     return (
         <>
             <FilterPanel>
-                {user.role === UserType.Parent && (
-                    <FilterPanelItem>
-                        <Select options={students} placeholder="Իմ Երեխաները" style={{ width: 150 }} />
-                    </FilterPanelItem>
-                )}
-                {user.role === UserType.Teacher && (
-                    <FilterPanelItem>
-                        <Select options={classRooms} placeholder="Դասարան"  onChange={(value: any) => setSelectedClassRoom(value)} style={{ width: 150 }} />
-                    </FilterPanelItem>
-                )}
+                <FilterPanelItem>
+                    <Select options={classRooms} placeholder="Դասարան"  onChange={(value: any) => setSelectedClassRoom(value)} style={{ width: 150 }} />
+                </FilterPanelItem>
                 <FilterPanelItem>
                     <DatePicker placeholder="Ամսաթիվ" format="DD-MM-YYYY" style={{ width: 150 }} onChange={(e: any) => setSelectedDate(dayjs(e).format("DD-MM-YYYY"))} />
                 </FilterPanelItem>

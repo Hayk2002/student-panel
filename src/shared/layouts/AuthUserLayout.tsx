@@ -80,7 +80,7 @@ const studentControlPanel = [
         key: '2',
         icon: <FolderOpenOutlined />,
         label: (
-            <Link to="/gradeBook">Օրագիր</Link>
+            <Link to="/diary">Օրագիր</Link>
         )
     }
 ];
@@ -95,9 +95,9 @@ const parentControlPanel = [
     },
     {
         key: '2',
-        icon: <SmileOutlined />,
+        icon: <FolderOpenOutlined />,
         label: (
-            <Link to="/students">Իմ երեխաները</Link>
+            <Link to="/diary">Օրագիր</Link>
         )
     }
 ];
