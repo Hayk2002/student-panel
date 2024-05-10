@@ -11,8 +11,8 @@ const SignUpForm = ({ closeModal }: { closeModal: () => void }) => {
 
     const [selectedRole, setSelectedRole] = useState(null);
 
-    const handleSignUp = ({ email, password, ...rest }: any) => {
-        dispatch(authSignUp({ email, password, ...rest }, (msg: string) => {
+    const handleSignUp = ({ email, password, role, ...rest }: any) => {
+        dispatch(authSignUp({ email, password, role, ...rest }, (msg: string) => {
             message.success(msg);
             closeModal();
         }, (msg: string) => {

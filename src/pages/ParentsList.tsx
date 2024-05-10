@@ -35,7 +35,6 @@ const ParentsList = () => {
 
     const handleStudentSelect = (value: any) => {
         const data = value.map((item: any) => JSON.parse(item));
-        console.log(data);
         setSelectedStudents(data);
     };
 

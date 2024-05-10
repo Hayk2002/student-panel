@@ -77,6 +77,8 @@ export const addParentChildren = (parent: any, children: any, callback: any) => 
             children
         });
 
+        dispatch(fetchAllUsers());
+
         callback();
     } catch (error: any) {
         console.log(error);
@@ -85,14 +87,27 @@ export const addParentChildren = (parent: any, children: any, callback: any) => 
     }
 };
 
-export const addStudentGrades = (student: any, newGrades: any, callback: any) => async (dispatch: any) => {
+export const addStudentGrade = (student: any, newGrade: any, callback: any) => async (dispatch: any) => {
     try {
         dispatch(setLoading(true));
 
+        let shouldBeAdded = true;
+
+        const requestData = student?.grades.map((grade: any) => {
+            if (grade.date === newGrade.date) {
+                shouldBeAdded = false;
+                return newGrade;
+            }
+
+            return grade;
+        });
+
         await set(ref(db, 'UsersAuthList/' + student.id), {
             ...student,
-            grades: [...student?.grades, ...newGrades]
+            grades: [...requestData, shouldBeAdded ? newGrade : null]
         });
+
+        dispatch(fetchAllUsers());
 
         callback();
     } catch (error: any) {

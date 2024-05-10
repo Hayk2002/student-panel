@@ -28,16 +28,25 @@ export default authSlice.reducer;
 
 export const { setLoading, setAuth } = authSlice.actions;
 
-export const authSignUp = ({ email, password, ...rest }: any, successCallback: (msg: string) => void, failureCallback: (msg: string) => void) => {
+export const authSignUp = ({ email, password, role, ...rest }: any, successCallback: (msg: string) => void, failureCallback: (msg: string) => void) => {
     return async (dispatch: any) => {
         try {
             dispatch(setLoading(true));
 
             const credentials = await createUserWithEmailAndPassword(auth, email, password);
 
-            await set(ref(db, `UsersAuthList/${credentials.user.uid}`), {
-                ...rest,
-            });
+            if (role === UserType.Student) {
+                await set(ref(db, `UsersAuthList/${credentials.user.uid}`), {
+                    ...rest,
+                    role,
+                    grades: [{ subject: "", grade: "", absence: "", date: "" }]
+                });
+            } else {
+                await set(ref(db, `UsersAuthList/${credentials.user.uid}`), {
+                    ...rest,
+                    role
+                });
+            }
 
             dispatch(fetchAllUsers());
 
