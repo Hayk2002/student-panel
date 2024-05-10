@@ -1,12 +1,19 @@
-import {classRooms, UserType} from "../shared/utils/enums";
-import {CustomListItem, CustomListMeta, FilterPanel, FilterPanelItem} from "../shared/components/styled";
-import {Avatar, DatePicker, List, Select} from "antd";
-import dayjs from "dayjs";
-import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
-import {UserOutlined} from "@ant-design/icons";
-import {dispatch} from "../store";
-import {fetchAllUsers} from "../store/reducers/users";
+import { Avatar, Select } from "antd";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { UserOutlined } from "@ant-design/icons";
+
+import { classRooms, UserType } from "../shared/utils/enums";
+import {
+    CustomList,
+    CustomListItem,
+    CustomListMeta,
+    FilterPanel,
+    FilterPanelItem,
+    ListWrapper
+} from "../shared/components/styled";
+import { dispatch } from "../store";
+import { fetchAllUsers } from "../store/reducers/users";
 
 const StudentsList = () => {
     const allUsers = useSelector((state: any) => state.users.allUsers);
@@ -34,13 +41,13 @@ const StudentsList = () => {
     }, [allUsers, selectedClassRoom]);
 
     return (
-        <>
+        <ListWrapper>
             <FilterPanel>
                 <FilterPanelItem>
                     <Select allowClear options={classRooms} placeholder="Դասարան"  onChange={(value: any) => setSelectedClassRoom(value)} style={{ width: 150 }} />
                 </FilterPanelItem>
             </FilterPanel>
-            <List
+            <CustomList
                 loading={isLoading}
                 itemLayout="horizontal"
                 dataSource={students}
@@ -54,7 +61,7 @@ const StudentsList = () => {
                     </CustomListItem>
                 )}
             />
-        </>
+        </ListWrapper>
     );
 };
 

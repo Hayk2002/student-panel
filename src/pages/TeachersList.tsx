@@ -3,7 +3,14 @@ import React, {useEffect, useState} from "react";
 import {dispatch} from "../store";
 import {fetchAllUsers} from "../store/reducers/users";
 import {subjectsList, UserType} from "../shared/utils/enums";
-import {CustomListItem, CustomListMeta, FilterPanel, FilterPanelItem} from "../shared/components/styled";
+import {
+    CustomList,
+    CustomListItem,
+    CustomListMeta,
+    FilterPanel,
+    FilterPanelItem,
+    ListWrapper
+} from "../shared/components/styled";
 import {Avatar, List, Select} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 
@@ -33,13 +40,13 @@ const TeachersList = () => {
     }, [allUsers, selectedSubject]);
 
     return (
-        <>
+        <ListWrapper>
             <FilterPanel>
                 <FilterPanelItem>
                     <Select allowClear options={subjectsList} placeholder="Առարկա"  onChange={(value: any) => setSelectedSubject(value)} style={{ width: 150 }} />
                 </FilterPanelItem>
             </FilterPanel>
-            <List
+            <CustomList
                 loading={isLoading}
                 itemLayout="horizontal"
                 dataSource={teachers}
@@ -53,7 +60,7 @@ const TeachersList = () => {
                     </CustomListItem>
                 )}
             />
-        </>
+        </ListWrapper>
     );
 };
 

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {dispatch} from "../store";
 import {addParentChildren, fetchAllUsers} from "../store/reducers/users";
 import {subjectsList, UserType} from "../shared/utils/enums";
-import {CustomListItem, CustomListMeta, FilterPanel, FilterPanelItem} from "../shared/components/styled";
+import {CustomList, CustomListItem, CustomListMeta, FilterPanel, FilterPanelItem} from "../shared/components/styled";
 import {Avatar, Button, Divider, Form, List, message, Modal, Select} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 
@@ -47,7 +47,7 @@ const ParentsList = () => {
 
     return (
         <>
-            <List
+            <CustomList
                 loading={isLoading}
                 itemLayout="horizontal"
                 dataSource={parents}

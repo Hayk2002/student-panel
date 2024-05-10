@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import SpinLoader from "../shared/components/SpinLoader";
 import {Avatar, Button, List, Skeleton, Typography} from "antd";
 import {UserOutlined} from "@ant-design/icons";
-import {CustomListItem, CustomListMeta } from "../shared/components/styled";
+import {CustomList, CustomListItem, CustomListMeta} from "../shared/components/styled";
 
 enum ApplicantStatus {
     Pending = "pending",
@@ -53,7 +53,7 @@ const ApplicantsList = () => {
     }
 
     return (
-        <List
+        <CustomList
             loading={isLoading}
             itemLayout="horizontal"
             dataSource={applicants}

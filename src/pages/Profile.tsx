@@ -1,14 +1,15 @@
-import {Avatar, Button, Card, List, message, Tag, Typography} from "antd";
-import {UserOutlined} from "@ant-design/icons";
-import {useSelector} from "react-redux";
-import {CustomListItem, CustomListMeta, ProfileBlock} from "../shared/components/styled";
-import {UserType} from "../shared/utils/enums";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Card, message, Tag, Typography} from "antd";
+
+import { CustomList, CustomListItem, CustomListMeta, ListWrapper } from "../shared/components/styled";
+import { UserType } from "../shared/utils/enums";
 import styled from "styled-components";
 import SignUpForm from "../shared/components/SignUpForm";
-import React, {useEffect, useState} from "react";
 import CustomModal from "../shared/components/CustomModal";
-import {deleteUser, fetchAllUsers} from "../store/reducers/users";
-import {dispatch} from "../store";
+import { deleteUser, fetchAllUsers } from "../store/reducers/users";
+import { dispatch } from "../store";
 
 const returnUserRole = (role: string) => {
     switch (role) {
@@ -24,11 +25,6 @@ const returnUserRole = (role: string) => {
             break;
     }
 };
-
-const ProfilePageWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
 
 const ProfilePageBlock = styled.div`
     display: flex;
@@ -60,7 +56,7 @@ const Profile = () => {
     };
 
     return (
-        <ProfilePageWrapper>
+        <ListWrapper>
             <ProfilePageBlock>
                 <Card style={{ width: 300 }}>
                     <Card.Meta
@@ -81,7 +77,7 @@ const Profile = () => {
             {user?.role === UserType.Admin && (
                 <>
                     <Typography.Title level={2} style={{ color: "rgb(54 90 124)" }}>Բոլոր օգտատերերը</Typography.Title>
-                    <List
+                    <CustomList
                         loading={isLoading}
                         itemLayout="horizontal"
                         dataSource={allUsers?.filter((record: any) => record?.id !== user?.id)}
@@ -119,7 +115,7 @@ const Profile = () => {
                     style={{ display: "block", margin: "0 auto" }}
                     onClick={handleUserDelete}>Ջնջել</Button>
             </CustomModal>
-        </ProfilePageWrapper>
+        </ListWrapper>
     );
 };
 

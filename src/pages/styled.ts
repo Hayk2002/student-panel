@@ -95,13 +95,12 @@ export const AboutUsWrapper = styled.div`
 
 export const AboutUsGallery = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    column-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
 
 export const AboutUsGalleryImage = styled.div`
     border-radius: 12px;
-    height: 500px;
     
     img {
         width: 100%;
