@@ -93,6 +93,24 @@ export const AboutUsWrapper = styled.div`
     }
 `;
 
+export const AboutUsGallery = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+`;
+
+export const AboutUsGalleryImage = styled.div`
+    border-radius: 12px;
+    height: 500px;
+    
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        object-fit: cover;
+    }
+`;
+
 export const AboutUsContainer = styled(Container)`
     position: relative;
     z-index: 1;

@@ -7,6 +7,7 @@ const HomePage = lazy(() => import("pages/Home"));
 const AboutUsPage = lazy(() => import("pages/AboutUs"));
 const ApplicantPage = lazy(() => import("pages/Applicant"));
 const EventsPage = lazy(() => import("pages/Events"));
+const DiplomaPage = lazy(() => import("pages/Diploma"));
 const ProfilePage = lazy(() => import("pages/Profile"));
 const StudentsListPage = lazy(() => import("pages/StudentsList"));
 const TeachersListPage = lazy(() => import("pages/TeachersList"));
@@ -23,6 +24,7 @@ const AppRoutes = () => (
                 <Route path='about-us' element={<AboutUsPage />} />
                 <Route path='applicant' element={<ApplicantPage />} />
                 <Route path='events' element={<EventsPage />} />
+                <Route path='diploma' element={<DiplomaPage />} />
             </Route>
             <Route path='/' element={<PrivateRoute />}>
                 <Route path='profile' element={<ProfilePage />} />

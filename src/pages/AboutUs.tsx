@@ -1,4 +1,17 @@
-import { AboutUsContainer, AboutUsInfoBlock, AboutUsText, AboutUsTitle, AboutUsWrapper } from "./styled";
+import {
+    AboutUsContainer,
+    AboutUsGallery,
+    AboutUsGalleryImage,
+    AboutUsInfoBlock,
+    AboutUsText,
+    AboutUsTitle,
+    AboutUsWrapper
+} from "./styled";
+
+import src1 from "assets/about-img-1.png";
+import src2 from "assets/about-img-2.png";
+import src3 from "assets/about-img-3.png";
+import src4 from "assets/about-img-4.png";
 
 const AboutUsPage = () => {
 
@@ -6,6 +19,22 @@ const AboutUsPage = () => {
         <AboutUsWrapper>
             <AboutUsContainer>
                 <AboutUsTitle>Ընդհանուր տեղեկություն</AboutUsTitle>
+
+                <AboutUsGallery>
+                    <AboutUsGalleryImage>
+                        <img src={src1} alt="image"/>
+                    </AboutUsGalleryImage>
+                    <AboutUsGalleryImage>
+                        <img src={src2} alt="image"/>
+                    </AboutUsGalleryImage>
+                    <AboutUsGalleryImage>
+                        <img src={src3} alt="image"/>
+                    </AboutUsGalleryImage>
+                    <AboutUsGalleryImage>
+                        <img src={src4} alt="image"/>
+                    </AboutUsGalleryImage>
+                </AboutUsGallery>
+
                 <AboutUsInfoBlock>
                     <AboutUsText>
                         Հայաստանի ազգային պոլիտեխնիկական համալսարանի Երևանի ավագ դպրոցը իրականացնում է միջնակարգ կրթության երրորդ աստիճանի

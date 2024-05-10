@@ -11,15 +11,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import StudentFront from 'assets/studentFront.webp';
-import StudentAlumni from 'assets/studentAlumni.jpeg';
-import MaleStudent from 'assets/maleStudent.jpg';
-import StudentBack from "assets/studentBack.jpg";
-import TwoStudents from "assets/twoStudents.jpg";
-import StudentWithBackpack from "assets/studentWithBackpack.jpg";
-import Campus from "assets/campus.jpg";
-import Campus2 from "assets/campus2.jpg";
-
 import img1 from "assets/main-img-1.png";
 import img2 from "assets/main-img-2.png";
 import img3 from "assets/main-img-3.png";
@@ -29,7 +20,6 @@ import img6 from "assets/main-img-6.png";
 import img7 from "assets/main-img-7.png";
 import img8 from "assets/main-img-8.png";
 import img9 from "assets/main-img-9.png";
-import img10 from "assets/main-img-10.png";
 import img11 from "assets/main-img-11.png";
 
 const sliderSettings = {
