@@ -76,7 +76,7 @@ const GradeBook = () => {
             )
         },
         {
-            title: 'Հաստատնել փոփխությունը',
+            title: 'Հաստատնել փոփոխությունը',
             dataIndex: 'actions',
             render: (_: any, record: any) => (
                 <Button type="primary" loading={isLoading} disabled={!record.grade && !record.absence} onClick={() => handleUpdate(record)}>Թարմացնել</Button>

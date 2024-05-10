@@ -81,6 +81,12 @@ const Home = () => {
                         <SliderImage>
                             <img src={img8} alt="image"/>
                         </SliderImage>
+                        <SliderImage>
+                            <img src={img9} alt="image"/>
+                        </SliderImage>
+                        <SliderImage>
+                            <img src={img11} alt="image"/>
+                        </SliderImage>
                     </Slider>
                 </Container>
             </AlumniSection>

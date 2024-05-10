@@ -71,20 +71,8 @@ export const HeaderNavListItem = styled.li`
         }
         
         &.active {
-            color: #07357a;
+            color: #0a6687;
             text-decoration: underline;
-        }
-    }
-    
-    a.contact-link {
-        color: #ffffff;
-        padding: 5px 15px;
-        border-radius: 6px;
-        background-color: rgb(255, 116, 91);
-        
-        &:hover {
-            opacity: 0.5;
-            text-decoration: none;
         }
     }
 

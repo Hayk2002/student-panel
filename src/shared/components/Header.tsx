@@ -1,9 +1,9 @@
-import {Avatar, Button, Dropdown, message} from "antd";
-import type { MenuProps } from "antd";
 import { useState } from "react";
+import type { MenuProps } from "antd";
 import { useSelector } from "react-redux";
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import { Avatar, Button, Dropdown } from "antd";
 import { UserOutlined } from '@ant-design/icons';
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import {
     HeaderLogo,
@@ -21,7 +21,6 @@ import CustomModal from "shared/components/CustomModal";
 import { authSignOut } from "../../store/reducers/auth";
 
 const Header = () => {
-    const navigate = useNavigate();
     const user = useSelector((state: any) => state.auth.user);
 
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -69,7 +68,7 @@ const Header = () => {
                                 <NavLink to={"/applicant"} className={({ isActive }: any) => isActive && "active"}>Դիմորդ</NavLink>
                             </HeaderNavListItem>
                             <HeaderNavListItem>
-                                <a href="#footer" className="contact-link">Կապ</a>
+                                <a href="#footer">Կապ</a>
                             </HeaderNavListItem>
                             {user?.firstName ? (
                                 <Dropdown
@@ -87,7 +86,7 @@ const Header = () => {
                                 </Dropdown>
                             ) : (
                                 <HeaderNavListItem onClick={toggleModal}>
-                                    <Button type="primary">Մուտք</Button>
+                                    <Button type="primary" style={{ backgroundColor: "#0a6687" }}>Մուտք</Button>
                                 </HeaderNavListItem>
                             )}
                         </HeaderNavList>
