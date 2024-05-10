@@ -13,7 +13,7 @@ import {
 import { Button, Layout, Menu } from 'antd';
 import { dispatch } from "../../store";
 import { authSignOut } from "../../store/reducers/auth";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, NavLink, useLocation, useNavigate} from "react-router-dom";
 import { CustomSider, SiderLogoutButton } from "./styled";
 import { useSelector } from "react-redux";
 import { UserType } from "../utils/enums";
@@ -21,124 +21,189 @@ import SpinLoader from "../components/SpinLoader";
 
 const { Header, Content } = Layout;
 
-const adminControlPanel = [
+const SidebarLink = ({ route, text, handleClick }: any) => (
+    <NavLink to={route} onClick={handleClick}>{text}</NavLink>
+);
+
+const adminControlPanel = (handleClick: any) => ([
     {
         key: '1',
         icon: <UserOutlined />,
         label: (
-            <Link to="/profile">Անձնական էջ</Link>
+            <SidebarLink
+                route="/profile"
+                text="Անձնական էջ"
+                handleClick={() => handleClick("1")}
+            />
         )
     },
     {
         key: '2',
         icon: <EyeOutlined />,
         label: (
-            <Link to="/teachers">Ուսուցիչներ</Link>
+            <SidebarLink
+                route="/teachers"
+                text="Ուսուցիչներ"
+                handleClick={() => handleClick("2")}
+            />
         )
     },
     {
         key: '3',
         icon: <EyeOutlined />,
         label: (
-            <Link to="/parents">Ծնողներ</Link>
+            <SidebarLink
+                route="/parents"
+                text="Ծնողներ"
+                handleClick={() => handleClick("3")}
+            />
         )
     },
     {
         key: '4',
         icon: <SmileOutlined />,
         label: (
-            <Link to="/students">Աշակերտներ</Link>
+            <SidebarLink
+                route="/students"
+                text="Աշակերտներ"
+                handleClick={() => handleClick("4")}
+            />
         )
     },
     {
         key: '5',
         icon: <FileSearchOutlined />,
         label: (
-            <Link to="/applicants">Դիմորդներ</Link>
+            <SidebarLink
+                route="/applicants"
+                text="Դիմորդներ"
+                handleClick={() => handleClick("5")}
+            />
         )
     },
-];
+]);
 
-const teacherControlPanel = [
+const teacherControlPanel= (handleClick: any) => ([
     {
         key: '1',
         icon: <UserOutlined />,
         label: (
-            <Link to="/profile">Անձնական էջ</Link>
-        )
-    },
-    {
-        key: '3',
-        icon: <FolderOpenOutlined />,
-        label: (
-            <Link to="/gradeBook">Մատյան</Link>
-        )
-    }
-];
-
-const studentControlPanel = [
-    {
-        key: '1',
-        icon: <UserOutlined />,
-        label: (
-            <Link to="/profile">Անձնական էջ</Link>
+            <SidebarLink
+                route="/profile"
+                text="Անձնական էջ"
+                handleClick={() => handleClick("1")}
+            />
         )
     },
     {
         key: '2',
         icon: <FolderOpenOutlined />,
         label: (
-            <Link to="/diary">Օրագիր</Link>
+            <SidebarLink
+                route="/gradeBook"
+                text="Մատյան"
+                handleClick={() => handleClick("2")}
+            />
         )
     }
-];
+]);
 
-const parentControlPanel = [
+const studentControlPanel = (handleClick: any) => ([
     {
         key: '1',
         icon: <UserOutlined />,
         label: (
-            <Link to="/profile">Անձնական էջ</Link>
+            <SidebarLink
+                route="/profile"
+                text="Անձնական էջ"
+                handleClick={() => handleClick("1")}
+            />
         )
     },
     {
         key: '2',
         icon: <FolderOpenOutlined />,
         label: (
-            <Link to="/diary">Օրագիր</Link>
+            <SidebarLink
+                route="/diary"
+                text="Օրագիր"
+                handleClick={() => handleClick("2")}
+            />
         )
     }
-];
+]);
 
-const getControlPanelByUserType = (userType: string) => {
+const parentControlPanel = (handleClick: any) => ([
+    {
+        key: '1',
+        icon: <UserOutlined />,
+        label: (
+            <SidebarLink
+                route="/profile"
+                text="Անձնական էջ"
+                onClick={() => handleClick("1")}
+            />
+        )
+    },
+    {
+        key: '2',
+        icon: <FolderOpenOutlined />,
+        label: (
+            <SidebarLink
+                route="/diary"
+                text="Օրագիր"
+                onClick={() => handleClick("2")}
+            />
+        )
+    }
+]);
+
+const getControlPanelByUserType = (userType: string, handleClick: any) => {
     switch (userType) {
         case UserType.Admin:
-            return adminControlPanel;
+            return adminControlPanel(handleClick);
         case UserType.Teacher:
-            return teacherControlPanel;
+            return teacherControlPanel(handleClick);
         case UserType.Student:
-            return studentControlPanel;
+            return studentControlPanel(handleClick);
         case UserType.Parent:
-            return parentControlPanel;
+            return parentControlPanel(handleClick);
         default:
             break
     }
 };
 
 const AuthUserLayout = ({ children }: { children: React.ReactNode }) => {
+    const { pathname } = useLocation();
     const navigate = useNavigate();
+
     const user = useSelector((state: any) => state.auth.user);
 
-    const [collapsed, setCollapsed] = useState<boolean>(false);
     const [menuItems, setMenuItems] = useState<any>([]);
+    const [selectedKeys, setSelectedKeys] = useState(["1"]);
+    const [collapsed, setCollapsed] = useState<boolean>(false);
 
     const handleSignOut = async () => {
         dispatch(authSignOut(() => navigate('/')));
     };
 
     useEffect(() => {
+        if (pathname === "/profile") {
+            setSelectedKeys(["1"]);
+        } else if (pathname === "/teachers" || pathname === "/gradeBook" || pathname === "/diary") {
+            setSelectedKeys(["2"]);
+        } else if (pathname === "/parents") {
+            setSelectedKeys(["3"]);
+        } else if (pathname === "/students") {
+            setSelectedKeys(["4"]);
+        } else if (pathname === "/applicants") {
+            setSelectedKeys(["5"]);
+        }
+    }, [pathname]);
+
+    useEffect(() => {
         if (user) {
-            setMenuItems(getControlPanelByUserType(user?.role));
+            setMenuItems(getControlPanelByUserType(user?.role, (key: string) => setSelectedKeys([key])));
         }
     }, [user]);
 
@@ -148,8 +213,9 @@ const AuthUserLayout = ({ children }: { children: React.ReactNode }) => {
                 <Menu
                     theme="dark"
                     mode="inline"
-                    defaultSelectedKeys={['1']}
                     items={menuItems}
+                    selectedKeys={selectedKeys}
+                    activeKey={pathname}
                 />
                 <SiderLogoutButton type="primary" onClick={handleSignOut}>
                     Դուրս գալ
@@ -166,7 +232,7 @@ const AuthUserLayout = ({ children }: { children: React.ReactNode }) => {
                     <Button
                         type="text"
                         icon={<HomeOutlined />}
-                        onClick={() => navigate('/')}
+                        onClick={handleSignOut}
                     />
                 </Header>
                 <Content

@@ -69,6 +69,11 @@ export const HeaderNavListItem = styled.li`
         &:hover {
             text-decoration: underline;
         }
+        
+        &.active {
+            color: #07357a;
+            text-decoration: underline;
+        }
     }
     
     a.contact-link {

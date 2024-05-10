@@ -2,7 +2,7 @@ import {Avatar, Button, Dropdown, message} from "antd";
 import type { MenuProps } from "antd";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import { UserOutlined } from '@ant-design/icons';
 
 import {
@@ -31,7 +31,7 @@ const Header = () => {
     };
 
     const handleSignOut = async () => {
-        dispatch(authSignOut(() => message.success('Ելքը հաջողված է')));
+        dispatch(authSignOut(() => {}));
     };
 
     const items: MenuProps["items"] = [
@@ -57,16 +57,16 @@ const Header = () => {
                     <HeaderNav>
                         <HeaderNavList>
                             <HeaderNavListItem>
-                                <Link to={"/about-us"}>Մեր մասին</Link>
+                                <NavLink to={"/about-us"} className={({ isActive }: any) => isActive && "active"}>Մեր մասին</NavLink>
                             </HeaderNavListItem>
                             <HeaderNavListItem>
-                                <Link to={"/events"}>Իրադարձություններ</Link>
+                                <NavLink to={"/events"} className={({ isActive }: any) => isActive && "active"}>Իրադարձություններ</NavLink>
                             </HeaderNavListItem>
                             <HeaderNavListItem>
-                                <Link to={"/diploma"}>IB Դիպլոմա ծրագիր</Link>
+                                <NavLink to={"/diploma"} className={({ isActive }: any) => isActive && "active"}>IB Դիպլոմա ծրագիր</NavLink>
                             </HeaderNavListItem>
                             <HeaderNavListItem>
-                                <Link to={"/applicant"}>Դիմորդ</Link>
+                                <NavLink to={"/applicant"} className={({ isActive }: any) => isActive && "active"}>Դիմորդ</NavLink>
                             </HeaderNavListItem>
                             <HeaderNavListItem>
                                 <a href="#footer" className="contact-link">Կապ</a>
