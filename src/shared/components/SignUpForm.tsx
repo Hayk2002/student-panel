@@ -88,7 +88,7 @@ const SignUpForm = ({ closeModal }: { closeModal: () => void }) => {
                     },
                     {
                         required: true,
-                        message: 'Էլ․ հասցեն պարտադիր է'
+                        message: 'Մուտքագրեք Էլ․ հասցեն'
                     }
                 ]}
             >

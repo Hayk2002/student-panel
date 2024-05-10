@@ -1,7 +1,8 @@
-import { Avatar } from "antd";
+import {Avatar, Button, Dropdown, message} from "antd";
+import type { MenuProps } from "antd";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { UserOutlined } from '@ant-design/icons';
 
 import {
@@ -11,7 +12,7 @@ import {
     HeaderNavListItem,
     HeaderWrapper,
     HeaderContainer,
-    HeaderProfile
+    HeaderProfile, HeaderLogOut
 } from "./styled";
 import SignInForm from "./SignInForm";
 import { dispatch } from "../../store";
@@ -30,8 +31,21 @@ const Header = () => {
     };
 
     const handleSignOut = async () => {
-        dispatch(authSignOut(() => {}));
+        dispatch(authSignOut(() => message.success('Ելքը հաջողված է')));
     };
+
+    const items: MenuProps["items"] = [
+        {
+            key: "1",
+            label: (<Link to="/profile">Իմ հաշիվը</Link>)
+        },
+        {
+            key: "2",
+            label: (
+                <HeaderLogOut onClick={handleSignOut}>Դուրս գալ</HeaderLogOut>
+            )
+        }
+    ];
 
     return (
         <>
@@ -42,9 +56,27 @@ const Header = () => {
                     </HeaderLogo>
                     <HeaderNav>
                         <HeaderNavList>
+                            <HeaderNavListItem>
+                                <Link to={"/about-us"}>Մեր մասին</Link>
+                            </HeaderNavListItem>
+                            <HeaderNavListItem>
+                                <Link to={"/events"}>Իրադարձություններ</Link>
+                            </HeaderNavListItem>
+                            <HeaderNavListItem>
+                                <Link to={"/diploma"}>IB Դիպլոմա ծրագիր</Link>
+                            </HeaderNavListItem>
+                            <HeaderNavListItem>
+                                <Link to={"/applicant"}>Դիմորդ</Link>
+                            </HeaderNavListItem>
+                            <HeaderNavListItem>
+                                <a href="#footer" className="contact-link">Կապ</a>
+                            </HeaderNavListItem>
                             {user?.firstName ? (
-                                <>
-                                    <HeaderProfile onClick={() => navigate('/profile')}>
+                                <Dropdown
+                                    menu={{ items }}
+                                    placement="bottomLeft"
+                                >
+                                    <HeaderProfile>
                                         <Avatar icon={<UserOutlined />} />
                                         <p>
                                             {user.firstName}
@@ -52,12 +84,11 @@ const Header = () => {
                                             {user.lastName}
                                         </p>
                                     </HeaderProfile>
-                                    <HeaderNavListItem onClick={handleSignOut}>Դուրս գալ</HeaderNavListItem>
-                                </>
+                                </Dropdown>
                             ) : (
-                                <>
-                                    <HeaderNavListItem onClick={toggleModal}>Մուտք</HeaderNavListItem>
-                                </>
+                                <HeaderNavListItem onClick={toggleModal}>
+                                    <Button type="primary">Մուտք</Button>
+                                </HeaderNavListItem>
                             )}
                         </HeaderNavList>
                     </HeaderNav>

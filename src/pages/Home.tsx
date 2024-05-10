@@ -20,6 +20,18 @@ import StudentWithBackpack from "assets/studentWithBackpack.jpg";
 import Campus from "assets/campus.jpg";
 import Campus2 from "assets/campus2.jpg";
 
+import img1 from "assets/main-img-1.png";
+import img2 from "assets/main-img-2.png";
+import img3 from "assets/main-img-3.png";
+import img4 from "assets/main-img-4.png";
+import img5 from "assets/main-img-5.png";
+import img6 from "assets/main-img-6.png";
+import img7 from "assets/main-img-7.png";
+import img8 from "assets/main-img-8.png";
+import img9 from "assets/main-img-9.png";
+import img10 from "assets/main-img-10.png";
+import img11 from "assets/main-img-11.png";
+
 const sliderSettings = {
     dots: true,
     infinite: true,
@@ -35,40 +47,39 @@ const Home = () => {
                 <Container>
                     <HeroSectionContent>
                         <HeroSectionTitle>
-                            Բարի գալուստ առցանց ուսանողական և
+                            Բարի գալուստ Հայաստանի ազգային պոլիտեխնիկական համալսարանի
                             <br/>
-                            ադմինիստրատիվ ղեկավարման հարթակ
+                            Երևանի Ավագ դպրոցի առցանց հարթակ
                         </HeroSectionTitle>
                     </HeroSectionContent>
                 </Container>
             </HeroSection>
             <AlumniSection>
                 <Container>
-                    <Slider {...sliderSettings}>
+                    <Slider {...sliderSettings} className="slider-wrapper">
                         <SliderImage>
-                            <img src={StudentFront} alt="image"/>
+                            <img src={img1} alt="image"/>
                         </SliderImage>
                         <SliderImage>
-                            <br/>
-                            <img src={Campus} alt="image"/>
-                            <br/>
-                            <br/>
-                            <img src={Campus2} alt="image"/>
+                            <img src={img2} alt="image"/>
                         </SliderImage>
                         <SliderImage>
-                        <img src={StudentAlumni} alt="image"/>
+                            <img src={img3} alt="image"/>
                         </SliderImage>
                         <SliderImage>
-                            <img src={StudentBack} alt="image"/>
+                            <img src={img4} alt="image"/>
                         </SliderImage>
                         <SliderImage>
-                            <img src={MaleStudent} alt="image"/>
+                            <img src={img5} alt="image"/>
                         </SliderImage>
                         <SliderImage>
-                            <img src={TwoStudents} alt="image"/>
+                            <img src={img6} alt="image"/>
                         </SliderImage>
                         <SliderImage>
-                            <img src={StudentWithBackpack} alt="image"/>
+                            <img src={img7} alt="image"/>
+                        </SliderImage>
+                        <SliderImage>
+                            <img src={img8} alt="image"/>
                         </SliderImage>
                     </Slider>
                 </Container>

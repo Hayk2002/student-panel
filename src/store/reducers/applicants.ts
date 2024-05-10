@@ -95,3 +95,17 @@ export const editApplicantStatus = (id: string, status: string) => {
         }
     }
 }
+
+export const contactWithSupport = (values: any, callback: any) => async (dispatch: any) => {
+    try {
+        dispatch(setLoading(true));
+
+        await addDoc(collection(firestore, 'contactsInfo'), { ...values });
+
+        callback();
+    } catch (error: any) {
+        console.log(error);
+    } finally {
+        dispatch(setLoading(false));
+    }
+};

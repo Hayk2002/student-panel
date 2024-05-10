@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {Container} from "../styled";
 import {Link} from "react-router-dom";
-import {List} from "antd";
+import {Form, List} from "antd";
 
 // PROFILE BLOCK STYLES
 
@@ -39,13 +39,7 @@ export const HeaderLogo = styled(Link)`
 
 export const HeaderProfile = styled(ProfileBlock)`
     cursor: pointer;
-    
-    &:hover {
-        border-radius: 8px;
-        border: none;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        transition: 0.3s ease-in-out;
-    }
+    margin-left: 20px;
 `;
 
 export const HeaderNav = styled.nav`
@@ -63,14 +57,48 @@ export const HeaderNavList = styled.ul`
 export const HeaderNavListItem = styled.li`
     font-size: 18px;
     font-weight: 600;
-    font-style: oblique;
     padding: 0 10px;
-    color: #2557a7;
     cursor: pointer;
+
+    a {
+        font-size: 18px;
+        color: #212121;
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    
+    a.contact-link {
+        color: #ffffff;
+        padding: 5px 15px;
+        border-radius: 6px;
+        background-color: rgb(255, 116, 91);
+        
+        &:hover {
+            opacity: 0.5;
+            text-decoration: none;
+        }
+    }
+
+    span {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+    }
 
     &:hover {
         color: #07357a;
     }
+`;
+
+export const HeaderLogOut = styled.p`
+    color: #ff745b;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0;
 `;
 
 // FOOTER STYLES
@@ -78,6 +106,19 @@ export const HeaderNavListItem = styled.li`
 export const FooterWrapper = styled.footer`
     background-color: rgb(36, 38, 48);
     padding: 20px 0;
+`;
+
+export const FooterContent = styled(Container)`
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+`;
+
+export const FooterFormItem = styled(Form.Item)`
+    .ant-form-item-label >label {
+        color: #ffffff;
+    }
 `;
 
 export const FooterList = styled.ul`

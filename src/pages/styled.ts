@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
 import { Container } from "../shared/styled";
-import HeroBg from 'assets/bg.gif';
+import HeroBg from 'assets/main-img-10.png';
 import AboutUsBg from 'assets/aboutUs.jpg'
 import ApplicantBg from 'assets/applicant.jpg';
-import {Button} from "antd";
+import { Button } from "antd";
 
 // HOME PAGE STYLES
 
@@ -52,6 +52,11 @@ export const HeroSectionTitle = styled.h1`
 export const AlumniSection = styled.section`
     background-color: cadetblue;
     padding: 50px;
+    
+    .slider-wrapper .slick-track {
+        display: flex;
+        align-items: center;
+    }
 `;
 
 export const SliderImage = styled.div`
