@@ -202,7 +202,7 @@ export const ApplicantContentText = styled.p`
     z-index: 9;
     position: relative;
     text-align: center;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 500;
     color: #212121;
     line-height: 32px;
@@ -220,6 +220,7 @@ export const ApplicantContentText = styled.p`
 
 export const ApplicantButton = styled(Button)`
     width: 40%;
+    margin-top: 20px;
     background-color: cadetblue;
 
     &:hover {
