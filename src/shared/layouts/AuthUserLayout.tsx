@@ -1,4 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
+import { Button, Layout, Menu } from 'antd';
+import { useSelector } from "react-redux";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -10,12 +13,9 @@ import {
     HomeOutlined
 } from '@ant-design/icons';
 
-import { Button, Layout, Menu } from 'antd';
 import { dispatch } from "../../store";
 import { authSignOut } from "../../store/reducers/auth";
-import {Link, NavLink, useLocation, useNavigate} from "react-router-dom";
 import { CustomSider, SiderLogoutButton } from "./styled";
-import { useSelector } from "react-redux";
 import { UserType } from "../utils/enums";
 import SpinLoader from "../components/SpinLoader";
 
@@ -232,7 +232,7 @@ const AuthUserLayout = ({ children }: { children: React.ReactNode }) => {
                     <Button
                         type="text"
                         icon={<HomeOutlined />}
-                        onClick={handleSignOut}
+                        onClick={() => navigate('/')}
                     />
                 </Header>
                 <Content

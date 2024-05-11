@@ -196,7 +196,7 @@ export const ListWrapper = styled.div`
 `;
 
 export const CustomList = styled(List)`
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
 
     &::-webkit-scrollbar {

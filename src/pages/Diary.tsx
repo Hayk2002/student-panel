@@ -53,7 +53,7 @@ const Diary = () => {
                     .filter((gradeData: any) => gradeData.date === selectedDate)
                         .map((gradeData: any, index: number) => ({
                             key: index,
-                            name: gradeData.subject,
+                            subject: gradeData.subject,
                             grade: gradeData.grade,
                             absence: gradeData.absence,
                             date: gradeData.date
@@ -61,7 +61,7 @@ const Diary = () => {
             } else {
                 tableList = gradesList.map((gradeData: any, index: number) => ({
                     key: index,
-                    name: gradeData.subject,
+                    subject: gradeData.subject,
                     grade: gradeData.grade,
                     absence: gradeData.absence,
                     date: gradeData.date
@@ -84,7 +84,7 @@ const Diary = () => {
                     .filter((gradeData: any) => gradeData.date === selectedDate)
                     .map((gradeData: any, index: number) => ({
                         key: index,
-                        name: gradeData.subject,
+                        subject: gradeData.subject,
                         grade: gradeData.grade,
                         absence: gradeData.absence,
                         date: gradeData.date
@@ -92,7 +92,7 @@ const Diary = () => {
             } else {
                 tableList = gradesList.map((gradeData: any, index: number) => ({
                     key: index,
-                    name: gradeData.subject,
+                    subject: gradeData.subject,
                     grade: gradeData.grade,
                     absence: gradeData.absence,
                     date: gradeData.date
@@ -120,8 +120,8 @@ const Diary = () => {
 
     const columns = [
         {
-            title: 'Աշակերտ',
-            dataIndex: 'name',
+            title: 'Առարկա',
+            dataIndex: 'subject',
         },
         {
             title: 'Գնահատական',
