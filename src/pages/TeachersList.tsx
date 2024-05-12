@@ -55,7 +55,7 @@ const TeachersList = () => {
                         <CustomListMeta
                             avatar={<Avatar icon={<UserOutlined />} />}
                             title={`${item?.firstName} ${item?.lastName}`}
-                            description={item?.email}
+                            description={`${item?.email}`}
                         />
                     </CustomListItem>
                 )}

@@ -39,12 +39,14 @@ export const authSignUp = ({ email, password, role, ...rest }: any, successCallb
                 await set(ref(db, `UsersAuthList/${credentials.user.uid}`), {
                     ...rest,
                     role,
+                    email,
                     grades: [{ subject: "", grade: "", absence: "", date: "" }]
                 });
             } else {
                 await set(ref(db, `UsersAuthList/${credentials.user.uid}`), {
                     ...rest,
-                    role
+                    role,
+                    email
                 });
             }
 
@@ -71,7 +73,8 @@ export const authSignIn = ({ email, password }: any, successCallback: () => void
             if (snapshot.exists()) {
                 const userData = {
                     ...snapshot.val(),
-                    id: credentials.user.uid
+                    id: credentials.user.uid,
+                    email
                 };
 
                 dispatch(

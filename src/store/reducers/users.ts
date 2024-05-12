@@ -94,7 +94,7 @@ export const addStudentGrade = (student: any, newGrade: any, callback: any) => a
         let shouldBeAdded = true;
 
         const requestData = student?.grades.map((grade: any) => {
-            if (grade.date === newGrade.date) {
+            if (grade.date === newGrade.date && grade.subject === newGrade.subject) {
                 shouldBeAdded = false;
                 return newGrade;
             }
