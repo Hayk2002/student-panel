@@ -48,15 +48,43 @@ const QuestionCard = styled.div`
     border: 1px solid #212121;
     border-radius: 12px;
     padding: 14px;
+    max-height: 250px;
 `;
 
-const QuestionEmail = styled.p``;
-
-const QuestionPhone = styled.p``;
-
-const QuestionText = styled.p`
-    margin: 0
+const QuestionEmail = styled.p`
+    font-size: 14px;
+    font-weight: bold;
 `;
+
+const QuestionPhone = styled.p`
+    font-weight: 300;
+    font-size: 14px;
+    font-style: italic;
+`;
+
+const QuestionText = styled.div`
+    position: relative;
+    max-height: calc(1.4rem * 6);
+    overflow: hidden;
+    padding-right: 1rem;
+
+    &::before {
+        position: absolute;
+        content: "...";
+        bottom: 0;
+        right: 0;
+    }
+    
+    &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        width: 1rem;
+        height: 1rem;
+        background: white;
+    }
+`;
+
 
 const QuestionsListPage = () => {
     const isLoading = useSelector((state: any) => state.applicants.loading);
