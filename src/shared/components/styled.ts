@@ -218,7 +218,7 @@ export const CustomList = styled(List)`
 
     /* set button(top and bottom of the scrollbar) */
     &::-webkit-scrollbar-button {
-        display:none;
+        display: none;
     }
 `;
 

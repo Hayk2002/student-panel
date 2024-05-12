@@ -13,6 +13,7 @@ const StudentsListPage = lazy(() => import("pages/StudentsList"));
 const TeachersListPage = lazy(() => import("pages/TeachersList"));
 const ParentsListPage = lazy(() => import("pages/ParentsList"));
 const ApplicantsListPage = lazy(() => import("pages/ApplicantsList"));
+const QuestionsListPage = lazy(() => import("pages/QuestionsList"));
 const GradeBookPage = lazy(() => import("pages/GradeBook"));
 const DiaryPage = lazy(() => import("pages/Diary"));
 
@@ -32,6 +33,7 @@ const AppRoutes = () => (
                 <Route path='teachers' element={<TeachersListPage />} />
                 <Route path='parents' element={<ParentsListPage />} />
                 <Route path='applicants' element={<ApplicantsListPage />} />
+                <Route path='questions' element={<QuestionsListPage />} />
                 <Route path='gradeBook' element={<GradeBookPage />} />
                 <Route path='diary' element={<DiaryPage />} />
             </Route>

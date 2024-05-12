@@ -10,7 +10,8 @@ import {
     EyeOutlined,
     FileSearchOutlined,
     FolderOpenOutlined,
-    HomeOutlined
+    HomeOutlined,
+    QuestionOutlined
 } from '@ant-design/icons';
 
 import { dispatch } from "../../store";
@@ -78,6 +79,17 @@ const adminControlPanel = (handleClick: any) => ([
                 route="/applicants"
                 text="Դիմորդներ"
                 handleClick={() => handleClick("5")}
+            />
+        )
+    },
+    {
+        key: '6',
+        icon: <QuestionOutlined />,
+        label: (
+            <SidebarLink
+                route="/questions"
+                text="Հարցեր"
+                handleClick={() => handleClick("6")}
             />
         )
     },
@@ -198,6 +210,8 @@ const AuthUserLayout = ({ children }: { children: React.ReactNode }) => {
             setSelectedKeys(["4"]);
         } else if (pathname === "/applicants") {
             setSelectedKeys(["5"]);
+        } else if (pathname === "/questions") {
+            setSelectedKeys(["6"]);
         }
     }, [pathname]);
 

@@ -10,11 +10,13 @@ type Applicant = {
 interface ApplicantsState {
     loading: boolean;
     applicantsList: Applicant[];
+    supportQuestions: any,
 }
 
 const initialState: ApplicantsState = {
     loading: false,
-    applicantsList: []
+    applicantsList: [],
+    supportQuestions: [],
 };
 
 const applicantsSlice = createSlice({
@@ -38,13 +40,16 @@ const applicantsSlice = createSlice({
 
                 return item;
             });
+        },
+        getSupportQuestions(state, { payload }) {
+            state.supportQuestions = payload;
         }
     }
 });
 
 export default applicantsSlice.reducer;
 
-export const { setLoading, getApplicants, editApplicant } = applicantsSlice.actions;
+export const { setLoading, getApplicants, editApplicant, getSupportQuestions } = applicantsSlice.actions;
 
 export const createApplicant = (applicant: any, callback: any) => {
     return async (dispatch: any) => {
@@ -100,7 +105,7 @@ export const contactWithSupport = (values: any, callback: any) => async (dispatc
     try {
         dispatch(setLoading(true));
 
-        await addDoc(collection(firestore, 'contactsInfo'), { ...values });
+        await addDoc(collection(firestore, 'supportQuestions'), { ...values });
 
         callback();
     } catch (error: any) {
@@ -109,3 +114,18 @@ export const contactWithSupport = (values: any, callback: any) => async (dispatc
         dispatch(setLoading(false));
     }
 };
+
+export const fetchSupportQuestions = () => async (dispatch: any) => {
+    try {
+        dispatch(setLoading(true));
+        const querySnapshot = await getDocs(collection(firestore, 'supportQuestions'));
+        const newData = querySnapshot.docs
+            .map((doc) => ({ ...doc.data(), id: doc.id }));
+
+        dispatch(getSupportQuestions(newData));
+    } catch (error: any) {
+        console.log(error);
+    } finally {
+        dispatch(setLoading(false));
+    }
+}
