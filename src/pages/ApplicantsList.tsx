@@ -6,6 +6,7 @@ import SpinLoader from "../shared/components/SpinLoader";
 import {Avatar, Button, List, Skeleton, Typography} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import {CustomList, CustomListItem, CustomListMeta} from "../shared/components/styled";
+import applicant from "./Applicant";
 
 enum ApplicantStatus {
     Pending = "pending",
@@ -19,6 +20,7 @@ const ApplicantsList = () => {
 
     useEffect(() => {
         dispatch(fetchApplicants());
+        console.log(applicants);
     }, []);
 
     const updateApplicantStatus = (id: string, status: string) => {
@@ -62,9 +64,9 @@ const ApplicantsList = () => {
                     actions={getActionsByUserStatus(item?.id, item?.status)}
                 >
                     <CustomListMeta
-                        avatar={<Avatar icon={<UserOutlined />} />}
+                        avatar={item?.photoUrl ? <Avatar size={44} src={<img src={item?.photoUrl} alt="avatar"/>} /> : <Avatar size={44} icon={<UserOutlined />} />}
                         title={`${item?.firstName} ${item?.lastName}`}
-                        description={`${item?.social_id} ${item?.email} ${item?.phone1}`}
+                        description={item?.email}
                     />
                 </CustomListItem>
             )}

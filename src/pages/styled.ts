@@ -162,6 +162,12 @@ export const ApplicantPageContent = styled.div`
     height: 100%;
 `;
 
+export const ApplicantFormGroup = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+`;
+
 export const ApplicantImage = styled.div`
     position: relative;
     display: flex;

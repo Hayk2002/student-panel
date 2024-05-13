@@ -40,12 +40,13 @@ const QuestionsWrapper = styled.div`
 const QuestionsContent = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 250px;
     gap: 20px;
     height: 100%;
 `;
 
 const QuestionCard = styled.div`
-    border: 1px solid #212121;
+    border: 1px solid #bcbcbc;
     border-radius: 12px;
     padding: 14px;
     max-height: 250px;

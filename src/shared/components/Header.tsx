@@ -3,7 +3,7 @@ import type { MenuProps } from "antd";
 import { useSelector } from "react-redux";
 import { Avatar, Button, Dropdown } from "antd";
 import { UserOutlined } from '@ant-design/icons';
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import {
     HeaderLogo,
@@ -56,16 +56,16 @@ const Header = () => {
                     <HeaderNav>
                         <HeaderNavList>
                             <HeaderNavListItem>
-                                <NavLink to={"/about-us"} className={({ isActive }: any) => isActive && "active"}>Մեր մասին</NavLink>
+                                <NavLink to={"/about-us"} className={({ isActive }: any) => isActive ? "active" : ""}>Մեր մասին</NavLink>
                             </HeaderNavListItem>
                             <HeaderNavListItem>
-                                <NavLink to={"/events"} className={({ isActive }: any) => isActive && "active"}>Իրադարձություններ</NavLink>
+                                <NavLink to={"/events"} className={({ isActive }: any) => isActive ? "active" : ""}>Իրադարձություններ</NavLink>
                             </HeaderNavListItem>
                             <HeaderNavListItem>
-                                <NavLink to={"/diploma"} className={({ isActive }: any) => isActive && "active"}>IB Դիպլոմա ծրագիր</NavLink>
+                                <NavLink to={"/diploma"} className={({ isActive }: any) => isActive ? "active" : ""}>IB Դիպլոմա ծրագիր</NavLink>
                             </HeaderNavListItem>
                             <HeaderNavListItem>
-                                <NavLink to={"/applicant"} className={({ isActive }: any) => isActive && "active"}>Դիմորդ</NavLink>
+                                <NavLink to={"/applicant"} className={({ isActive }: any) => isActive ? "active" : ""}>Դիմորդ</NavLink>
                             </HeaderNavListItem>
                             <HeaderNavListItem>
                                 <a href="#footer">Կապ</a>

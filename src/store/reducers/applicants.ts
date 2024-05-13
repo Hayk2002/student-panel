@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { collection, addDoc, getDocs, doc, updateDoc } from "firebase/firestore";
 import { firestore } from "../../firebase-config";
+import { getStorage, uploadBytes, getDownloadURL, ref } from "firebase/storage";
+import {logDOM} from "@testing-library/react";
 
 type Applicant = {
     id: number;
@@ -55,8 +57,24 @@ export const createApplicant = (applicant: any, callback: any) => {
     return async (dispatch: any) => {
         try {
             dispatch(setLoading(true));
-            await addDoc(collection(firestore, 'applicants'), { ...applicant });
-            callback();
+            const snapshot = await addDoc(collection(firestore, 'applicants'), { ...applicant });
+            callback(snapshot.id);
+        } catch (error: any) {
+            console.log(error);
+        } finally {
+            dispatch(setLoading(false));
+        }
+    }
+}
+
+export const uploadApplicantAvatar = (file: any, id: string) => {
+    return async (dispatch: any) => {
+        try {
+            dispatch(setLoading(true));
+            const storage = getStorage();
+            const fileRef = ref(storage, id);
+
+            await uploadBytes(fileRef, file);
         } catch (error: any) {
             console.log(error);
         } finally {
@@ -69,11 +87,30 @@ export const fetchApplicants = () => {
     return async (dispatch: any) => {
         try {
             dispatch(setLoading(true));
+            const storage = getStorage();
             const querySnapshot = await getDocs(collection(firestore, 'applicants'));
-            const newData = querySnapshot.docs
-                .map((doc) => ({ ...doc.data(), id: doc.id }));
 
-            dispatch(getApplicants(newData));
+            const newData = querySnapshot.docs
+                .map(async (doc) => {
+                    const fileRef = ref(storage, doc.id);
+                    let photoUrl;
+
+                    try {
+                        photoUrl = await getDownloadURL(fileRef)
+                    } catch (error: any) {
+                        photoUrl = null;
+                    }
+
+                    return {
+                        ...doc.data(),
+                        photoUrl,
+                        id: doc.id
+                    };
+                });
+
+            const data = await Promise.all(newData);
+
+            dispatch(getApplicants(data));
         } catch (error: any) {
             console.log(error);
         } finally {
