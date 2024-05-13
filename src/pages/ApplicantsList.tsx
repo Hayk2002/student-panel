@@ -17,7 +17,10 @@ const ApplicantsList = () => {
     const applicants = useSelector((state: any) => state.applicants.applicantsList);
     const isLoading = useSelector((state: any) => state.applicants.loading);
 
-    const [isVisible, setIsVisible] = useState<boolean>(false);
+    const [modal, setModal] = useState<any>({
+        isOpen: false,
+        src: ""
+    });
 
     useEffect(() => {
         dispatch(fetchApplicants());
@@ -55,33 +58,35 @@ const ApplicantsList = () => {
     }
 
     return (
-        <CustomList
-            loading={isLoading}
-            itemLayout="horizontal"
-            dataSource={applicants}
-            renderItem={(item: any) => (
-                <CustomListItem
-                    actions={getActionsByUserStatus(item?.id, item?.status)}
-                >
-                    <CustomListMeta
-                        avatar={item?.avatarPhotoUrl ? <Avatar size={44} src={<img src={item?.avatarPhotoUrl} alt="avatar"/>} /> : <Avatar size={44} icon={<UserOutlined />} />}
-                        title={`${item?.firstName} ${item?.lastName}`}
-                        description={item?.email}
-                    />
-                    {item?.passportPhotoUrl && <Button type="dashed" onClick={() => setIsVisible(true)}>Անձնագիր</Button>}
-                    <Modal footer={false} open={isVisible} onCancel={() => setIsVisible(false)}>
-                        <img
-                            alt="passport"
-                            src={item?.passportPhotoUrl}
-                            style={{
-                                width: "100%",
-                                height: "500px",
-                                objectFit: "contain",
-                            }}/>
-                    </Modal>
-                </CustomListItem>
-            )}
-        />
+        <>
+            <CustomList
+                loading={isLoading}
+                itemLayout="horizontal"
+                dataSource={applicants}
+                renderItem={(item: any) => (
+                    <CustomListItem
+                        actions={getActionsByUserStatus(item?.id, item?.status)}
+                    >
+                        <CustomListMeta
+                            avatar={item?.avatarPhotoUrl ? <Avatar size={44} src={<img src={item?.avatarPhotoUrl} alt="avatar"/>} /> : <Avatar size={44} icon={<UserOutlined />} />}
+                            title={`${item?.firstName} ${item?.lastName}`}
+                            description={item?.email}
+                        />
+                        {item?.passportPhotoUrl && <Button type="dashed" onClick={() => setModal({ isOpen: true, src: item?.passportPhotoUrl })}>Անձնագիր</Button>}
+                    </CustomListItem>
+                )}
+            />
+            <Modal footer={false} open={modal.isOpen} onCancel={() => setModal({ isOpen: false, src: "" })}>
+                <img
+                    alt="passport"
+                    src={modal.src}
+                    style={{
+                        width: "100%",
+                        height: "500px",
+                        objectFit: "contain",
+                    }}/>
+            </Modal>
+        </>
     );
 };
 
