@@ -1,12 +1,11 @@
 import {useEffect, useState} from "react";
-import {dispatch} from "../store";
-import {editApplicantStatus, fetchApplicants} from "../store/reducers/applicants";
 import {useSelector} from "react-redux";
-import SpinLoader from "../shared/components/SpinLoader";
-import {Avatar, Button, List, Skeleton, Typography} from "antd";
-import {UserOutlined} from "@ant-design/icons";
-import {CustomList, CustomListItem, CustomListMeta} from "../shared/components/styled";
-import applicant from "./Applicant";
+import { UserOutlined } from "@ant-design/icons";
+import {Avatar, Button, Modal, Typography} from "antd";
+
+import { dispatch } from "../store";
+import { editApplicantStatus, fetchApplicants } from "../store/reducers/applicants";
+import { CustomList, CustomListItem, CustomListMeta } from "../shared/components/styled";
 
 enum ApplicantStatus {
     Pending = "pending",
@@ -18,9 +17,10 @@ const ApplicantsList = () => {
     const applicants = useSelector((state: any) => state.applicants.applicantsList);
     const isLoading = useSelector((state: any) => state.applicants.loading);
 
+    const [isVisible, setIsVisible] = useState<boolean>(false);
+
     useEffect(() => {
         dispatch(fetchApplicants());
-        console.log(applicants);
     }, []);
 
     const updateApplicantStatus = (id: string, status: string) => {
@@ -64,10 +64,21 @@ const ApplicantsList = () => {
                     actions={getActionsByUserStatus(item?.id, item?.status)}
                 >
                     <CustomListMeta
-                        avatar={item?.photoUrl ? <Avatar size={44} src={<img src={item?.photoUrl} alt="avatar"/>} /> : <Avatar size={44} icon={<UserOutlined />} />}
+                        avatar={item?.avatarPhotoUrl ? <Avatar size={44} src={<img src={item?.avatarPhotoUrl} alt="avatar"/>} /> : <Avatar size={44} icon={<UserOutlined />} />}
                         title={`${item?.firstName} ${item?.lastName}`}
                         description={item?.email}
                     />
+                    {item?.passportPhotoUrl && <Button type="dashed" onClick={() => setIsVisible(true)}>Անձնագիր</Button>}
+                    <Modal footer={false} open={isVisible} onCancel={() => setIsVisible(false)}>
+                        <img
+                            alt="passport"
+                            src={item?.passportPhotoUrl}
+                            style={{
+                                width: "100%",
+                                height: "500px",
+                                objectFit: "contain",
+                            }}/>
+                    </Modal>
                 </CustomListItem>
             )}
         />

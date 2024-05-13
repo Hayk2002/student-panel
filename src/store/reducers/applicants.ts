@@ -83,6 +83,22 @@ export const uploadApplicantAvatar = (file: any, id: string) => {
     }
 }
 
+export const uploadApplicantPassport = (file: any, id: string) => {
+    return async (dispatch: any) => {
+        try {
+            dispatch(setLoading(true));
+            const storage = getStorage();
+            const fileRef = ref(storage, `passport-${id}`);
+
+            await uploadBytes(fileRef, file);
+        } catch (error: any) {
+            console.log(error);
+        } finally {
+            dispatch(setLoading(false));
+        }
+    }
+}
+
 export const fetchApplicants = () => {
     return async (dispatch: any) => {
         try {
@@ -92,18 +108,24 @@ export const fetchApplicants = () => {
 
             const newData = querySnapshot.docs
                 .map(async (doc) => {
-                    const fileRef = ref(storage, doc.id);
-                    let photoUrl;
+                    const avatarFileRef = ref(storage, doc.id);
+                    const passportFileRef = ref(storage, `passport-${doc.id}`);
+
+                    let avatarPhotoUrl;
+                    let passportPhotoUrl;
 
                     try {
-                        photoUrl = await getDownloadURL(fileRef)
+                        avatarPhotoUrl = await getDownloadURL(avatarFileRef);
+                        passportPhotoUrl = await getDownloadURL(passportFileRef);
                     } catch (error: any) {
-                        photoUrl = null;
+                        avatarPhotoUrl = null;
+                        passportPhotoUrl = null;
                     }
 
                     return {
                         ...doc.data(),
-                        photoUrl,
+                        avatarPhotoUrl,
+                        passportPhotoUrl,
                         id: doc.id
                     };
                 });

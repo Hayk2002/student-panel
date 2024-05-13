@@ -15,7 +15,7 @@ import {
 import PDF from "../assets/dimum-hayt.pdf";
 import { dispatch } from "../store";
 import CustomModal from "../shared/components/CustomModal";
-import {createApplicant, uploadApplicantAvatar} from "../store/reducers/applicants";
+import {createApplicant, uploadApplicantAvatar, uploadApplicantPassport} from "../store/reducers/applicants";
 
 const ApplicantPage = () => {
     const isLoading = useSelector((state: any) => state.applicants.loading);
@@ -35,6 +35,7 @@ const ApplicantPage = () => {
         dispatch(createApplicant(applicant, (userId: string) => {
             message.success("Ձեր դիմումն ընդունված է:");
             avatarFileList.length && dispatch(uploadApplicantAvatar(avatarFileList[0].originFileObj, userId));
+            passportFileList.length && dispatch(uploadApplicantPassport(passportFileList[0].originFileObj, userId));
             setIsVisible(false);
             form.resetFields();
         }));
@@ -45,7 +46,6 @@ const ApplicantPage = () => {
     };
 
     const handlePassportUpload = ({ fileList } : any) => {
-        console.log(fileList);
         setPassportFileList(fileList);
     };
 
